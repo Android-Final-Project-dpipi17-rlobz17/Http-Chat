@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Http Server</string>
+    <string name="button_start_service_text">Start</string>
+    <string name="button_stop_service_text">Stop</string>
+    <string name="service_is_running_text">Message service is running</string>
+    <string name="service_is_stopped_text">Message service is not running</string>
+
 </resources>
