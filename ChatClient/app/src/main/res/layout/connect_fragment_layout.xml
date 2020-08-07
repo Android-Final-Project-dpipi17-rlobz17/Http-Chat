@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/connect_fragment_layout_info_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/check_connection"
+        android:textColor="#d1595959"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/connect_fragment_layout_progress_bar"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        android:visibility="visible"
+        app:indicatorColor="@color/progress_bar_color"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:layout_constraintEnd_toEndOf="@+id/connect_fragment_layout_info_text_view"
+        app:layout_constraintStart_toStartOf="@+id/connect_fragment_layout_info_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/connect_fragment_layout_info_text_view" />
+
+    <Button
+        android:id="@+id/connect_fragment_layout_retry_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/retry_button_name"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
