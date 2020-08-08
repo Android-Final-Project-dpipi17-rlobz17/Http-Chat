@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/connectPageFragment">
+    app:startDestination="@id/loginPageFragment">
 
     <fragment
         android:id="@+id/connectPageFragment"
         android:name="com.example.chatclient.pages.connectpage.ConnectPageFragment"
-        android:label="ConnectPageFragment" />
+        android:label="ConnectPageFragment" >
+        <action
+            android:id="@+id/action_connectPageFragment_to_loginPageFragment"
+            app:destination="@id/loginPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginPageFragment"
+        android:name="com.example.chatclient.pages.loginpage.LoginPageFragment"
+        android:label="LoginPageFragment" />
 </navigation>

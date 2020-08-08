@@ -3,4 +3,16 @@
     <string name="retry_button_name">Try Again</string>
     <string name="check_connection">Checking connection</string>
     <string name="connection_failure">Connection failed</string>
+
+    <string name="login_button_start">START</string>
+    <string name="login_button_wait">WAIT</string>
+    <string name="login_nickname_hint">Enter your nickname</string>
+    <string name="login_nickname_empty">Nickname Field should NOT be empty</string>
+    <string name="login_about_hint">What I do</string>
+    <string name="login_about_empty">What I Do Field should NOT be empty</string>
+    <string name="login_profile_picture_invalid">Profile PICTURE should be PICTURE</string>
+    <string name="login_profile_picture_description">Profile PICTURE should be PICTURE</string>
+    <string name="login_failure">Login Failure</string>
+
+
 </resources>

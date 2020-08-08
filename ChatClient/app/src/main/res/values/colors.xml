@@ -5,4 +5,9 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#FFFFFF</color>
     <color name="progress_bar_color">#8bb7f0</color>
+    <color name="login_text_view_background_color">#F3F6FF</color>
+    <color name="login_text_view_text_color">#9B9CA0</color>
+    <color name="login_start_button_background_color">#5479F1</color>
+    <color name="login_start_button_text_color">#F9FAFF</color>
+
 </resources>
