@@ -2,10 +2,13 @@ package com.example.chatclient.pages.chatpage.customviews
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import com.example.chatclient.R
 import com.google.android.material.appbar.AppBarLayout
+import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Math.abs
 
 class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChangedListener {
@@ -14,51 +17,77 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleSet: Int) : super(context, attrs, defStyleSet) {}
 
-
-    init {
-        inflate(context, R.layout.chat_page_expanded_toolbar, this)
-    }
-
-    private var mTransitionThreshold = 0.35f
+    private var mTransitionThreshold = 0.3f
     private var mLastPosition: Int = 0
     private var mToolbarOpen = true
 
-    private val mOpenToolBarSet: ConstraintSet = ConstraintSet()
-    private val mCloseToolBarSet: ConstraintSet = ConstraintSet()
+    private var fullNameExpanded: TextView
+    private var fullNameCollapsed: TextView
+
+    private var professionExpanded: TextView
+    private var professionCollapsed: TextView
+
+    private var backButtonExpanded: ImageView
+    private var backButtonCollapsed: ImageView
+
+    private var profilePictureExpanded: CircleImageView
+    private var profilePictureCollapsed: CircleImageView
+
+    init {
+        inflate(context, R.layout.chat_page_toolbar, this)
+
+        fullNameExpanded = findViewById(R.id.char_page_toolbar_full_name_tw_expanded)
+        fullNameCollapsed = findViewById(R.id.char_page_toolbar_full_name_tw_collapsed)
+
+        professionExpanded = findViewById(R.id.chat_page_proffesion_expanded)
+        professionCollapsed = findViewById(R.id.chat_page_proffesion_collapsed)
+
+        backButtonExpanded = findViewById(R.id.chat_page_toolbar_back_button_expanded)
+        backButtonCollapsed = findViewById(R.id.chat_page_toolbar_back_button_collapsed)
+
+        profilePictureExpanded = findViewById(R.id.chat_page_profile_photo_expanded)
+        profilePictureCollapsed = findViewById(R.id.chat_page_profile_photo_collapsed)
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (parent is AppBarLayout) {
             var appBarLayout = parent as AppBarLayout
             appBarLayout.addOnOffsetChangedListener(this)
-
-            mOpenToolBarSet.clone(context, R.layout.chat_page_expanded_toolbar)
-            mCloseToolBarSet.clone(context, R.layout.chat_page_collapsed_toolbar)
         }
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-//        if (mLastPosition == verticalOffset) {
-//            return
-//        }
-//        mLastPosition = verticalOffset
-//        val progress = abs(verticalOffset / appBarLayout?.height?.toFloat()!!)
-//
-////        val params = getLayoutParams() as AppBarLayout.LayoutParams
-////        params.topMargin = -verticalOffset
-////        setLayoutParams(params)
-////
-//        if (mToolbarOpen && progress > mTransitionThreshold) {
-//            mCloseToolBarSet.applyTo(this)
-//            mToolbarOpen = false
-//            forceLayout()
-//        } else if (!mToolbarOpen && progress < mTransitionThreshold) {
-//            mOpenToolBarSet.applyTo(this)
-//            mToolbarOpen = true
-//            forceLayout()
-//        }
+        if (mLastPosition == verticalOffset) {
+            return
+        }
+        mLastPosition = verticalOffset
+        val progress = abs(verticalOffset / appBarLayout?.height?.toFloat()!!)
+
+        if (mToolbarOpen && progress > mTransitionThreshold) {
+            changeVisibilityToExpandedElements(View.GONE)
+            changeVisibilityToCollapsedElements(View.VISIBLE)
+            mToolbarOpen = false
+        } else if (!mToolbarOpen && progress < mTransitionThreshold) {
+            changeVisibilityToCollapsedElements(View.GONE)
+            changeVisibilityToExpandedElements(View.VISIBLE)
+            mToolbarOpen = true
+        }
 
     }
 
+    private fun changeVisibilityToExpandedElements(newVisibility: Int) {
+        fullNameExpanded.visibility = newVisibility
+        professionExpanded.visibility = newVisibility
+        backButtonExpanded.visibility = newVisibility
+        profilePictureExpanded.visibility = newVisibility
+    }
+
+    private fun changeVisibilityToCollapsedElements(newVisibility: Int) {
+        fullNameCollapsed.visibility = newVisibility
+        professionCollapsed.visibility = newVisibility
+        backButtonCollapsed.visibility = newVisibility
+        profilePictureCollapsed.visibility = newVisibility
+    }
 
 }
