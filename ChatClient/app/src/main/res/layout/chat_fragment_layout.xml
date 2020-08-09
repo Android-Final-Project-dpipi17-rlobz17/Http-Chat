@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/chatPageMessageInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/chatPageAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+<!--                <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">-->
+
+            <com.example.chatclient.pages.chatpage.customviews.CollapsibleConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed" />
+
+            <!--            <androidx.appcompat.widget.Toolbar-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="80dp"-->
+            <!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>-->
+
+
+            <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!--    <androidx.core.widget.NestedScrollView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:fillViewport="true"-->
+        <!--        android:scrollbars="none"-->
+        <!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintHorizontal_bias="0.0"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+        <!--    </androidx.core.widget.NestedScrollView>-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatPageRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@+id/chatPageAppBarLayout" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.example.chatclient.pages.chatpage.customviews.ChatPageMessageInput
+        android:id="@+id/chatPageMessageInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

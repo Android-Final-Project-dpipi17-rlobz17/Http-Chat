@@ -13,6 +13,7 @@
     <string name="login_profile_picture_invalid">Profile PICTURE should be PICTURE</string>
     <string name="login_profile_picture_description">Profile PICTURE should be PICTURE</string>
     <string name="login_failure">Login Failure</string>
-
+    <string name="message_input_send_button_description">Sends Message</string>
+    <string name="message_input_hint">Message</string>
 
 </resources>
