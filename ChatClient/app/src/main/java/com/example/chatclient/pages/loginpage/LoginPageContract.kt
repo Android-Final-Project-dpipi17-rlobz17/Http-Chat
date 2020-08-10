@@ -8,10 +8,12 @@ interface LoginPageContract {
     }
 
     interface Presenter {
-        fun checkLogin(nickname: String, about: String, profile_picture : String?)
+        fun checkLogin(nickname: String, about: String, profile_picture : String)
+        fun loginSucceeded()
+        fun loginFailed()
     }
 
     interface Model {
-        fun checkLogin(nickname: String, about: String, profile_picture : String?) : Boolean
+        fun checkLogin(nickname: String, about: String, profile_picture : String)
     }
 }

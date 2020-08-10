@@ -5,7 +5,7 @@ import java.util.*
 
 class HistoryPageModelImpl (var presenter: HistoryPageContract.Presenter) : HistoryPageContract.Model{
 
-    override fun getData(searchText: String): List<Objects> {
+    override fun getData(searchText: String, index: Int) {
         TODO("Not yet implemented")
     }
 

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
+import com.example.chatclient.network.api.dataClasses.HistoryItem
 
 class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,7 +22,7 @@ class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(i
         history_recycler_view_item_last_date_text_view = itemView.findViewById(R.id.history_recycler_view_item_last_date_text_view)
     }
 
-    fun setUpView(model: HistoryRecyclerViewCellModel){
+    fun setUpView(model: HistoryItem){
         if(model.image_string == ""){
             history_recycler_view_item_image_view?.setImageResource(R.drawable.login_default_avatar)
         }else {

@@ -7,10 +7,15 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
+import com.example.chatclient.network.api.dataClasses.HistoryItem
+import com.example.chatclient.pages.historypage.HistoryPagePresenterImpl
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class HistoryRecyclerViewAdapter(private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var data : List<HistoryRecyclerViewCellModel>
+    private var data : List<HistoryItem> = listOf()
+    private var searchString: String = ""
 
     private var clickListener = View.OnClickListener {
         val args = Bundle()
@@ -32,9 +37,16 @@ class HistoryRecyclerViewAdapter(private val navController: NavController) : Rec
         val historyRecyclerViewViewHolder = holder as HistoryRecyclerViewViewHolder
         historyRecyclerViewViewHolder.setUpView(data[position])
         historyRecyclerViewViewHolder.itemView.tag = historyRecyclerViewViewHolder.adapterPosition
+
+        if(position % 10 == 0) {
+            GlobalScope.launch {
+                presenter.getData(searchString, position)
+            }
+        }
     }
 
-    fun updateData(newData: List<HistoryRecyclerViewCellModel>){
+    fun updateData(newData: List<HistoryItem>, searchString: String){
+        this.searchString = searchString
         data = newData
         notifyDataSetChanged()
     }

@@ -6,12 +6,16 @@ class LoginPagePresenterImpl(var view: LoginPageContract.View, var context: Cont
 
     private var model = LoginPageModelImpl(this)
 
-    override fun checkLogin(nickname: String, about: String, profile_picture: String?) {
-        if(model.checkLogin(nickname,about,profile_picture)){
-            view.onLoginSuccess()
-        }else{
-            view.onLoginFailure()
-        }
+    override fun checkLogin(nickname: String, about: String, profile_picture: String) {
+        model.checkLogin(nickname,about,profile_picture)
+    }
+
+    override fun loginSucceeded() {
+        view.onLoginSuccess()
+    }
+
+    override fun loginFailed() {
+        view.onLoginFailure()
     }
 
 }
