@@ -68,7 +68,7 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
         // TODO[RL] Not yet implemented
     }
 
-    private val itemTouchHelpCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+    private val itemTouchHelpCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,

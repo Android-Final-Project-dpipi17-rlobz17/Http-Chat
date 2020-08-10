@@ -14,6 +14,7 @@ class HistoryRecyclerViewAdapter(private val navController: NavController) : Rec
 
     private var clickListener = View.OnClickListener {
         val args = Bundle()
+        args.putString("friend nickname", data[it.tag as Int].nickname)
         navController.navigate(R.id.action_historyPageFragment_to_chatPageFragment, args)
     }
 
@@ -30,6 +31,7 @@ class HistoryRecyclerViewAdapter(private val navController: NavController) : Rec
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val historyRecyclerViewViewHolder = holder as HistoryRecyclerViewViewHolder
         historyRecyclerViewViewHolder.setUpView(data[position])
+        historyRecyclerViewViewHolder.itemView.tag = historyRecyclerViewViewHolder.adapterPosition
     }
 
     fun updateData(newData: List<HistoryRecyclerViewCellModel>){
