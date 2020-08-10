@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), ServerContract.View {
 
     override fun onServerStop() {
         runOnUiThread {
-            serviceTextView.text = getString(R.string.service_is_running_text)
-            onOffButton.text = getString(R.string.button_stop_service_text)
+            serviceTextView.text = getString(R.string.service_is_stopped_text)
+            onOffButton.text = getString(R.string.button_start_service_text)
         }
     }
 
