@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
 
             // Handle /messages endpoint
             mHttpServer!!.createContext("/messages", messageHandler)
+
+            mHttpServer!!.createContext("/connection", connectionHandler)
             mHttpServer!!.start()
             serviceTextView.text = getString(R.string.service_is_running_text)
             onOffButton.text = getString(R.string.button_stop_service_text)
@@ -111,6 +113,16 @@ class MainActivity : AppCompatActivity() {
                     sendResponse(httpExchange, jsonBody.toString())
                 }
 
+            }
+        }
+    }
+
+    private val connectionHandler = HttpHandler { exchange ->
+        run {
+            when (exchange!!.requestMethod) {
+                "GET" -> {
+                    sendResponse(exchange, true.toString())
+                }
             }
         }
     }

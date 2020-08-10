@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.chatclient.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -96,6 +97,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
     override fun onLoginSuccess() {
         (mContext as Activity).runOnUiThread {
             // TODO[RL] navigate
+            findNavController().navigate(R.id.test)
         }
     }
 

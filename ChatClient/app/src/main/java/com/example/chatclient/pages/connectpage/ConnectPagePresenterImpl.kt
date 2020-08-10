@@ -7,7 +7,11 @@ class ConnectPagePresenterImpl(var view: ConnectPageContract.View, var context: 
     private var model: ConnectPageContract.Model = ConnectPageModelImpl(this)
 
     override fun checkConnection() {
-        if (model.checkConnection()) {
+        model.checkConnection()
+    }
+
+    override fun connectionChecked(success: Boolean) {
+        if (success) {
             view.onConnectionSuccess()
         } else {
             view.onConnectionFailure()

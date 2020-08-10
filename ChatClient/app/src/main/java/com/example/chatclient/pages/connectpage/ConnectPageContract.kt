@@ -9,9 +9,10 @@ interface ConnectPageContract {
 
     interface Presenter {
         fun checkConnection()
+        fun connectionChecked(success: Boolean)
     }
 
     interface Model {
-        fun checkConnection() : Boolean
+        fun checkConnection()
     }
 }

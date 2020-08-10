@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.chatclient.R
 import com.wang.avi.AVLoadingIndicatorView
 import kotlinx.coroutines.GlobalScope
@@ -64,8 +65,7 @@ class ConnectPageFragment : Fragment(), ConnectPageContract.View {
         (mContext as Activity).runOnUiThread {
             progressBar.smoothToHide()
 
-            // TODO[DP] navigate
-            // findNavController().navigate(R.id.action_connectPageFragment_to_MessagesPageFragment)
+            findNavController().navigate(R.id.action_connectPageFragment_to_loginPageFragment)
         }
     }
 
