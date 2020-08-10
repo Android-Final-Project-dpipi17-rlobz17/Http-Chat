@@ -10,4 +10,7 @@
     <color name="login_start_button_background_color">#5479F1</color>
     <color name="login_start_button_text_color">#F9FAFF</color>
 
+    <color name="history_search_background_color">#DEDEFD</color>
+    <color name="history_search_text_color">#A0A0B2</color>
+
 </resources>

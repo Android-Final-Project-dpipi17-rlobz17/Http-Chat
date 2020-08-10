@@ -15,4 +15,8 @@
     <string name="login_failure">Login Failure</string>
 
 
+    <string name="history_search_text">Search</string>
+    <string name="history_recycler_view_empty_view_text">You have no chat history</string>
+
+
 </resources>

@@ -7,7 +7,7 @@ class ConnectPageModelImpl(var presenter: ConnectPageContract.Presenter) : Conne
     override fun checkConnection(): Boolean {
         // TODO[DP] check service connection
         sleep(5000)
-        return false;
+        return false
     }
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/loginPageFragment">
+    app:startDestination="@id/historyPageFragment">
 
     <fragment
         android:id="@+id/connectPageFragment"
@@ -15,4 +15,8 @@
         android:id="@+id/loginPageFragment"
         android:name="com.example.chatclient.pages.loginpage.LoginPageFragment"
         android:label="LoginPageFragment" />
+    <fragment
+        android:id="@+id/historyPageFragment"
+        android:name="com.example.chatclient.pages.historypage.HistoryPageFragment"
+        android:label="HistoryPageFragment" />
 </navigation>
