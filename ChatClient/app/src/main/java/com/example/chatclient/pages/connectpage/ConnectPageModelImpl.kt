@@ -14,6 +14,7 @@ class ConnectPageModelImpl(var presenter: ConnectPageContract.Presenter) : Conne
         val retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:5000/")
             .baseUrl("http://localhost:5000/")
+            .baseUrl("http://10.0.2.2:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
