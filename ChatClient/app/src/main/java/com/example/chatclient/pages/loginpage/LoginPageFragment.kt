@@ -96,8 +96,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
 
     override fun onLoginSuccess() {
         (mContext as Activity).runOnUiThread {
-            // TODO[RL] navigate
-            findNavController().navigate(R.id.test)
+            findNavController().navigate(R.id.action_loginPageFragment_to_historyPageFragment)
         }
     }
 

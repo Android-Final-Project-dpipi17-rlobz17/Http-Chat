@@ -21,6 +21,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <com.example.chatclient.pages.chatpage.customviews.CollapsibleConstraintLayout
+                    android:id="@+id/chatPageToolBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="90dp"

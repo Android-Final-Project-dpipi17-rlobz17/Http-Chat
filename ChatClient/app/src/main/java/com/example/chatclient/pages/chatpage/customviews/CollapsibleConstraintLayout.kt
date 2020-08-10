@@ -11,6 +11,7 @@ import com.google.android.material.appbar.AppBarLayout
 import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Math.abs
 
+
 class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChangedListener {
 
     constructor(context: Context) : this(context, null)
@@ -88,6 +89,32 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
         professionCollapsed.visibility = newVisibility
         backButtonCollapsed.visibility = newVisibility
         profilePictureCollapsed.visibility = newVisibility
+    }
+
+    fun setUpView(model: CollapsibleToolBarLayoutModel, backButtonClickHandler: BackButtonClickHandler) {
+        fullNameExpanded.text = model.name
+        fullNameCollapsed.text = model.name
+
+        professionExpanded.text = model.profession
+        professionCollapsed.text = model.profession
+
+
+        var backButtonClickListener = View.OnClickListener {
+            backButtonClickHandler.onClick()
+        }
+        backButtonExpanded.setOnClickListener(backButtonClickListener)
+        backButtonCollapsed.setOnClickListener(backButtonClickListener)
+
+        // TODO[DP] uncomment later
+//        val imageBytes = Base64.decode(model.imageString, Base64.DEFAULT)
+//        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+//        profilePictureExpanded.setImageBitmap(decodedImage)
+//        profilePictureCollapsed.setImageBitmap(decodedImage)
+
+    }
+
+    interface BackButtonClickHandler {
+        fun onClick()
     }
 
 }

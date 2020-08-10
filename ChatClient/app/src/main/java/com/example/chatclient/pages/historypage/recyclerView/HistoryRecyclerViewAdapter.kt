@@ -1,16 +1,25 @@
 package com.example.chatclient.pages.historypage.recyclerView
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
 
-class HistoryRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HistoryRecyclerViewAdapter(private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var data : List<HistoryRecyclerViewCellModel>
 
+    private var clickListener = View.OnClickListener {
+        val args = Bundle()
+        navController.navigate(R.id.action_historyPageFragment_to_chatPageFragment, args)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.history_recycler_view_item, parent, false)
+        view.setOnClickListener(clickListener)
         return HistoryRecyclerViewViewHolder(view)
     }
 
@@ -19,8 +28,8 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val history_recycler_view_cell_view_holder = holder as HistoryRecyclerViewViewHolder
-        history_recycler_view_cell_view_holder.setUpView(data[position])
+        val historyRecyclerViewViewHolder = holder as HistoryRecyclerViewViewHolder
+        historyRecyclerViewViewHolder.setUpView(data[position])
     }
 
     fun updateData(newData: List<HistoryRecyclerViewCellModel>){

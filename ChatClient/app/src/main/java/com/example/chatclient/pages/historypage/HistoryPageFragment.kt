@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +57,7 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
 
         recyclerView.setEmptyView(view.findViewById(R.id.history_recycler_view_empty_text_view))
         ItemTouchHelper(itemTouchHelpCallBack).attachToRecyclerView(recyclerView)
-        recyclerViewAdapter = HistoryRecyclerViewAdapter()
+        recyclerViewAdapter = HistoryRecyclerViewAdapter(findNavController())
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.updateData(data)
 

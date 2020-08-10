@@ -16,11 +16,19 @@
         android:name="com.example.chatclient.pages.loginpage.LoginPageFragment"
         android:label="LoginPageFragment" >
         <action
-            android:id="@+id/test"
-            app:destination="@id/chatPageFragment" />
+            android:id="@+id/action_loginPageFragment_to_historyPageFragment"
+            app:destination="@id/historyPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatPageFragment"
         android:name="com.example.chatclient.pages.chatpage.ChatPageFragment"
         android:label="ChatPageFragment" />
+    <fragment
+        android:id="@+id/historyPageFragment"
+        android:name="com.example.chatclient.pages.historypage.HistoryPageFragment"
+        android:label="HistoryPageFragment" >
+        <action
+            android:id="@+id/action_historyPageFragment_to_chatPageFragment"
+            app:destination="@id/chatPageFragment" />
+    </fragment>
 </navigation>
