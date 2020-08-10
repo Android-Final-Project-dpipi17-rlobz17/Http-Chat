@@ -1,15 +1,21 @@
 package com.example.httpserver
 
 import android.content.Context
+import com.example.httpserver.database.message.MessageEntity
+import com.example.httpserver.database.response.ChatPageResponse
+import com.google.gson.Gson
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import org.json.JSONObject
+import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.net.InetSocketAddress
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 class ServerPresenterImpl(var view: ServerContract.View, var context: Context) : ServerContract.Presenter {
 
@@ -21,12 +27,8 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
             mHttpServer = HttpServer.create(InetSocketAddress(port), 0)
             mHttpServer!!.executor = Executors.newCachedThreadPool()
 
-            mHttpServer!!.createContext("/", rootHandler)
-            mHttpServer!!.createContext("/index", rootHandler)
-
-            // Handle /messages endpoint
-            mHttpServer!!.createContext("/messages", messageHandler)
             mHttpServer!!.createContext("/connection", connectionHandler)
+            mHttpServer!!.createContext("/messages", messageHandler)
 
             mHttpServer!!.start()
 
@@ -51,37 +53,44 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         os.close()
     }
 
-    private val rootHandler = HttpHandler { exchange ->
-        run {
-            when (exchange!!.requestMethod) {
-                "GET" -> {
-                    sendResponse(exchange, "Message Service - Home Page")
-                }
-            }
-        }
-    }
-
     private val messageHandler = HttpHandler { httpExchange ->
         run {
             when (httpExchange!!.requestMethod) {
                 "GET" -> {
-                    var id = httpExchange.requestURI.rawQuery
-                    sendResponse(httpExchange, "Would be all messages stringified json $id")
+                    handleGetMessages(httpExchange)
                 }
 
                 "POST" -> {
-                    val inputStream = httpExchange.requestBody
-
-                    val requestBody = streamToString(inputStream)
-                    val jsonBody = JSONObject(requestBody)
-                    // save message to database
-
-                    //for testing
-                    sendResponse(httpExchange, jsonBody.toString())
+                    handleSendMessage(httpExchange)
                 }
 
             }
         }
+    }
+
+    private fun handleGetMessages(exchange: HttpExchange) {
+        val params = queryToMap(exchange.requestURI.rawQuery)
+        val clientNickName = params?.get("clientNickName")
+        val friendNickName = params?.get("friendNickName")
+
+        val friendUser = friendNickName?.let { model.getUserByNickName(it) }
+
+        friendUser?.let {
+            if (clientNickName != null) {
+                val messages = model.getChatMessages(clientNickName, friendNickName)
+                sendResponse(exchange, ChatPageResponse(it, messages).toString())
+            } else {
+                sendResponse(exchange, ChatPageResponse(it, ArrayList()).toString())
+            }
+        }
+    }
+
+    private fun handleSendMessage(exchange: HttpExchange) {
+        val inputStreamReader = InputStreamReader(exchange.requestBody, "utf-8")
+        val jsonString = BufferedReader(inputStreamReader).use(BufferedReader::readText)
+        val message: MessageEntity = Gson().fromJson(jsonString, MessageEntity::class.java)
+
+        model.saveMessage(message)
     }
 
     private val connectionHandler = HttpHandler { exchange ->
@@ -109,11 +118,6 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
                 }
             }
             return result
-        }
-
-        fun streamToString(inputStream: InputStream): String {
-            val s = Scanner(inputStream).useDelimiter("\\A")
-            return if (s.hasNext()) s.next() else ""
         }
     }
 }

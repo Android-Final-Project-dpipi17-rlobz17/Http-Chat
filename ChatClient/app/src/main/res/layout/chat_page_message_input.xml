@@ -29,6 +29,7 @@
             app:srcCompat="@drawable/send" />
 
         <EditText
+            android:id="@+id/char_page_message_input_edit_text"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="40dp"
@@ -39,6 +40,7 @@
             android:gravity="start|top"
             android:hint="@string/message_input_hint"
             android:inputType="textMultiLine"
+            android:windowSoftInputMode="adjustPan"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/chat_page_message_input_send_button"
             app:layout_constraintEnd_toStartOf="@+id/chat_page_message_input_send_button"

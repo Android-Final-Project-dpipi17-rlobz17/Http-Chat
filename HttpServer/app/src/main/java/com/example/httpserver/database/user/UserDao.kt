@@ -9,7 +9,7 @@ import androidx.room.Query
 interface UserDao {
 
     @Query("select * from user_table where nickName = :nickName")
-    fun getNote(nickName: String): UserEntity
+    fun getUserByNickName(nickName: String): UserEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUser(user: UserEntity) : Long

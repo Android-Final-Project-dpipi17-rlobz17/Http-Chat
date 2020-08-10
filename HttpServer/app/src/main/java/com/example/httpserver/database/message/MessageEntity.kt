@@ -9,13 +9,13 @@ import java.util.*
 @Entity(tableName = "message_table",
     foreignKeys = [
         ForeignKey(entity = UserEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["fromUserId"],
+            parentColumns = ["nickName"],
+            childColumns = ["fromNickName"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(entity = UserEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["toUserId"],
+            parentColumns = ["nickName"],
+            childColumns = ["toNickName"],
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -23,8 +23,8 @@ import java.util.*
 data class MessageEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val fromUserId: Int,
-    val toUserId: Int,
+    val fromNickName: String,
+    val toNickName: String,
     val text: String,
     val sendTime: Date
 )

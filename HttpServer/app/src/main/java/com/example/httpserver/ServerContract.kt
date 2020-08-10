@@ -1,5 +1,7 @@
 package com.example.httpserver
 
+import com.example.httpserver.database.message.MessageEntity
+import com.example.httpserver.database.user.UserEntity
 import com.sun.net.httpserver.HttpExchange
 
 interface ServerContract {
@@ -16,6 +18,8 @@ interface ServerContract {
     }
 
     interface Model {
-
+        fun getUserByNickName(nickName: String): UserEntity
+        fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
+        fun saveMessage(message: MessageEntity)
     }
 }
