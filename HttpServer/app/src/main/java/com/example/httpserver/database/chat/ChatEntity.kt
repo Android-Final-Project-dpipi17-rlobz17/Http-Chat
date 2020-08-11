@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class ChatEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val firstUser : String,
-    val secondUser : String
+    var firstUser : String,
+    var secondUser : String
 )

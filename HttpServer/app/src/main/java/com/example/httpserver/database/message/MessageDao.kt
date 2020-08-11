@@ -17,6 +17,17 @@ interface MessageDao {
         """)
     fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
 
+    @Query("""
+        select m.* from message_table m
+        where (m.chatID = :chatID)
+        order by m.sendTime desc
+        limit 1
+        """)
+    fun getLastMessage(chatID: Int): MessageEntity?
+
+
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMessage(message: MessageEntity) : Long
 

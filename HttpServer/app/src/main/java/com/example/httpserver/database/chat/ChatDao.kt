@@ -24,7 +24,7 @@ interface ChatDao {
 //    fun getHistory(clientNickName : String, index : Int, searchText: String): List<Int>
 
     @Query("""
-        select ch.id from chat_table ch
+        select ch.* from chat_table ch
         left join message_table m
         on m.chatID = ch.id
         where ((ch.firstUser = :clientNickName and ch.secondUser like :searchText) or (ch.secondUser = :clientNickName and ch.firstUser like :searchText))
@@ -34,7 +34,7 @@ interface ChatDao {
         limit 10
         offset :index
         """)
-    fun getHistory(clientNickName : String, index : Int, searchText: String) : List<Int>
+    fun getOrderedAndLimitedChatEntities(clientNickName : String, index : Int, searchText: String) : List<ChatEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertChat(chat: ChatEntity) : Long

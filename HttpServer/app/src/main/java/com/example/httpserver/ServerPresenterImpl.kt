@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.httpserver.database.chat.ChatEntity
 import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.response.ChatPageResponse
+import com.example.httpserver.database.response.HistoryPageResponse
 import com.example.httpserver.database.user.UserEntity
 import com.google.gson.Gson
 import com.sun.net.httpserver.HttpExchange
@@ -149,14 +150,49 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
                     handleHistoryData(exchange)
                 }
                 "POST" -> {
-                    handleLogin(exchange)
+                    handleHistoryRemove(exchange)
                 }
             }
         }
     }
 
     private fun handleHistoryData(exchange: HttpExchange){
+        val params = queryToMap(exchange.requestURI.rawQuery)
+        val clientNickName = params?.get("clientNickName")
+        val index = params?.get("index")?.toInt()
+        val searchText = params?.get("searchText")
 
+        if(clientNickName != null && index != null && searchText != null){
+            val chatEntityList = model.getOrderedAndLimitedChatEntities(clientNickName, index, searchText)
+            val resultList = mutableListOf<HistoryPageResponse>()
+            for (chatEntity in chatEntityList){
+                var friendNickName = chatEntity.firstUser
+                if(chatEntity.firstUser == clientNickName){
+                    friendNickName = chatEntity.secondUser
+                }
+                val friendUserEntity = model.getUserByNickName(friendNickName)!!
+                val lastMessage = model.getLastMessage(chatEntity.id)
+
+                var lastMessageText = ""
+                var lastMessageDate : Date? = null
+                if(lastMessage != null){
+                    lastMessageText = lastMessage.text
+                    lastMessageDate = lastMessage.sendTime
+                }
+
+                resultList.add(HistoryPageResponse(chatEntity.id,friendUserEntity.profile_picture, friendUserEntity.nickname, lastMessageText, lastMessageDate))
+            }
+
+            sendResponse(exchange, resultList.toString())
+        }
+    }
+
+    private fun handleHistoryRemove(exchange: HttpExchange){
+        val inputStreamReader = InputStreamReader(exchange.requestBody, "utf-8")
+        val jsonString = BufferedReader(inputStreamReader).use(BufferedReader::readText)
+        val user: UserEntity = Gson().fromJson(jsonString, UserEntity::class.java)
+
+        // TODO[RL]
     }
 
 

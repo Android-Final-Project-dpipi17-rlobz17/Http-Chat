@@ -34,8 +34,20 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         database.getMessageDao().saveMessage(message)
     }
 
+    override fun getLastMessage(chatID: Int): MessageEntity? {
+        return database.getMessageDao().getLastMessage(chatID)
+    }
+
     override fun insertChat(chat: ChatEntity): Long {
         return database.getChatDao().insertChat(chat)
+    }
+
+    override fun getOrderedAndLimitedChatEntities(
+        clientNickName: String,
+        index: Int,
+        searchText: String
+    ): List<ChatEntity> {
+        return database.getChatDao().getOrderedAndLimitedChatEntities(clientNickName, index, searchText)
     }
 
     override fun forDebug() {

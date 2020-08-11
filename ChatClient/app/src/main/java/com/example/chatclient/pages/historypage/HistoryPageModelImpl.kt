@@ -21,17 +21,17 @@ class HistoryPageModelImpl (var presenter: HistoryPageContract.Presenter) : Hist
         val call = service.getHistory(userNickname, index, searchText)
 
 
-        Thread.sleep(1000)
-
         call.enqueue(object : Callback<List<HistoryResponse>> {
             override fun onResponse(call: Call<List<HistoryResponse>>, response: Response<List<HistoryResponse>>) {
                 if (response.code() == 200) {
                     presenter.updateData(response.body()!!, searchText)
+                }else{
+                    Thread.sleep(1000)
                 }
             }
 
             override fun onFailure(call: Call<List<HistoryResponse>>, t: Throwable) {
-
+                Thread.sleep(1000)
             }
         })
     }
