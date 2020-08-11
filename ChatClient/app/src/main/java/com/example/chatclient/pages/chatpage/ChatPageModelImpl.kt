@@ -13,7 +13,7 @@ class ChatPageModelImpl(var presenter: ChatPageContract.Presenter) : ChatPageCon
 
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("http://localhost:5000/")
-        .baseUrl("http://10.0.2.2:5000/")
+//        .baseUrl("http://10.0.2.2:5000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

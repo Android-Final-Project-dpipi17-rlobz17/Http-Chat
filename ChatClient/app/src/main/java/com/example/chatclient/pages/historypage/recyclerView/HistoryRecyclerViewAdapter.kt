@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var data : List<HistoryResponse> = listOf()
-    private lateinit var onGetDataHandler: OnGetDataHandler
+    private var data : MutableList<HistoryResponse> = mutableListOf()
+    private lateinit var dataRequestHandler: DataRequestHandler
 
     private var clickListener = View.OnClickListener {
         val args = Bundle()
@@ -39,22 +39,33 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
         historyRecyclerViewViewHolder.setUpView(data[position])
         historyRecyclerViewViewHolder.itemView.tag = historyRecyclerViewViewHolder.adapterPosition
 
-        if(position % 10 == 0) {
-            //onGetDataHandler.onGetData(position)
+
+        if(position == data.size - 1 && data.size % 10 == 0) {
+            dataRequestHandler.requestNewDataLazyLoading(position)
         }
     }
 
-    fun setUpView(onGetDataHandler: OnGetDataHandler) {
-        this.onGetDataHandler = onGetDataHandler
+    fun setUpView(dataRequestHandler: DataRequestHandler) {
+        this.dataRequestHandler = dataRequestHandler
     }
 
-    fun updateData(newData: List<HistoryResponse>){
+    interface DataRequestHandler {
+        fun requestNewDataLazyLoading(position: Int)
+    }
+
+    fun addDataForLazyLoading(newData: MutableList<HistoryResponse>){
+        val oldSize = data.size
+        data.addAll(newData)
+        notifyItemRangeChanged(oldSize, data.size)
+    }
+
+    fun changeData(newData: MutableList<HistoryResponse>){
         data = newData
         notifyDataSetChanged()
     }
 
-    interface OnGetDataHandler {
-        fun onGetData(position: Int)
+    fun returnAllData() : List<HistoryResponse> {
+        return data
     }
 
 }

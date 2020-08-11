@@ -28,7 +28,7 @@ import java.util.*
 
 
 class HistoryPageFragment: Fragment(), HistoryPageContract.View,
-    HistoryRecyclerViewAdapter.OnGetDataHandler {
+    HistoryRecyclerViewAdapter.DataRequestHandler {
 
     lateinit var mContext : Context
     private lateinit var presenter : HistoryPagePresenterImpl
@@ -36,8 +36,6 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
     private lateinit var searchEditText: EditText
     private lateinit var recyclerView: HistoryRecyclerView
     private lateinit var recyclerViewAdapter: HistoryRecyclerViewAdapter
-
-    private var data : MutableList<HistoryResponse> = mutableListOf()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -84,7 +82,9 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
                         object : TimerTask() {
                             override fun run() {
                                 if (s.toString().length > 2) {
-                                    presenter.getData(s.toString(), 0)
+                                    updateAllDataAndPositionZero()
+                                }else{
+                                    updateAllDataAndPositionZero()
                                 }
                             }
                         },
@@ -103,10 +103,7 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.setUpView(this)
 
-        GlobalScope.launch {
-            presenter.getData("", 0)
-        }
-
+        updateAllDataAndPositionZero()
         return view
     }
 
@@ -121,32 +118,44 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             GlobalScope.launch {
-                presenter.removeMessages(data[viewHolder.adapterPosition].friend_nickname)
-                Thread.sleep(100)
-                presenter.getData(searchEditText.text.toString(),0)
+                presenter.removeMessages(recyclerViewAdapter.returnAllData()[viewHolder.adapterPosition].friend_nickname)
             }
         }
     }
 
-    override fun updateData(newData: List<HistoryResponse>, searchString: String) {
-        data = newData.toMutableList()
-        (mContext as Activity).runOnUiThread {
-            recyclerViewAdapter.updateData(data)
+    // changes for server
+    override fun requestNewDataLazyLoading(position: Int) {
+        GlobalScope.launch {
+            presenter.addNewDataLazyLoading(searchEditText.text.toString(), position)
         }
     }
 
-    override fun dataChanged() {
-        onGetData(0)
+    private fun updateAllDataAndPositionZero(){
+        var searchText = searchEditText.text.toString()
+        if(searchText.length <= 2){
+            searchText = ""
+        }
+        GlobalScope.launch {
+            presenter.changeData(searchText)
+        }
     }
 
-    override fun getContext() : Context{
+
+    // changes from server
+    override fun newDataForLazyLoading(newData: List<HistoryResponse>) {
+        recyclerViewAdapter.addDataForLazyLoading(newData.toMutableList())
+    }
+
+    override fun newDataForChange(newData: List<HistoryResponse>) {
+        recyclerViewAdapter.changeData(newData.toMutableList())
+    }
+
+    override fun getSavedContext(): Context {
         return mContext
     }
 
-    override fun onGetData(position: Int) {
-        GlobalScope.launch {
-            presenter.getData(searchEditText.text.toString(), position)
-        }
+    override fun dataNeedsUpdating() {
+        updateAllDataAndPositionZero()
     }
 
 }

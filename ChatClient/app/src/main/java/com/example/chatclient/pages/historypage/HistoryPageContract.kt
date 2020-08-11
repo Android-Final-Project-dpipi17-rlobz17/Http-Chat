@@ -6,20 +6,29 @@ import com.example.chatclient.network.dataclasses.HistoryResponse
 interface HistoryPageContract {
 
     interface View {
-        fun updateData(newData : List<HistoryResponse>, searchString: String)
-        fun dataChanged()
-        fun getContext() : Context
+        // called by presenter
+        fun newDataForLazyLoading(newData : List<HistoryResponse>)
+        fun newDataForChange(newData : List<HistoryResponse>)
+        fun getSavedContext() : Context
+        fun dataNeedsUpdating()
     }
 
     interface Presenter {
-        fun getData(searchText : String, index: Int)
+        // called by view and calls model
+        fun addNewDataLazyLoading(searchText : String, index: Int)
+        fun changeData(searchText : String)
         fun removeMessages(friendNickname: String)
-        fun updateData(newData : List<HistoryResponse>, searchString: String)
-        fun dataChanged()
+
+        // called by model and calls view
+        fun newDataForLazyLoading(newData : List<HistoryResponse>)
+        fun newDataForChange(newData : List<HistoryResponse>)
+        fun dataNeedsUpdating()
     }
 
     interface Model {
-        fun getData(userNickname: String, searchText : String, index: Int)
+        // called by presenter
+        fun addNewDataLazyLoading(userNickname: String, searchText : String, index: Int)
+        fun changeData(userNickname: String, searchText : String)
         fun removeMessages(userNickname: String, friendNickname: String)
     }
 
