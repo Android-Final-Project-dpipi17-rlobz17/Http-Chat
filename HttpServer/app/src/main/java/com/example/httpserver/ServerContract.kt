@@ -30,6 +30,7 @@ interface ServerContract {
         fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
         fun saveMessage(message: MessageEntity)
         fun getLastMessage(chatID : Int) : MessageEntity?
+        fun deleteAllMessagesBetween(clientNickName: String, friendNickName: String)
 
         fun insertChat(chat: ChatEntity) : Long
         fun getOrderedAndLimitedChatEntities(clientNickName : String, index : Int, searchText: String) : List<ChatEntity>

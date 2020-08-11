@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.httpserver.database.message.MessageEntity
 
 @Dao
 interface ChatDao {
@@ -14,7 +13,7 @@ interface ChatDao {
         left join message_table m
         on m.chatID = ch.id
         where ((ch.firstUser = :clientNickName and ch.secondUser like :searchText) or (ch.secondUser = :clientNickName and ch.firstUser like :searchText))
-        and ((length(:searchText) > 2) or m.sendTime != null)
+        and ((length(:searchText) > 2) or m.sendTime is not null)
         group by ch.id
         order by CASE WHEN m.sendTime IS NULL THEN 1 ELSE 0 END, m.sendTime DESC
         limit 10

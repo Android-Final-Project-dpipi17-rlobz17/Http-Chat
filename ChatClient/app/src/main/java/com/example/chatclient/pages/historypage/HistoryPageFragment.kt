@@ -135,6 +135,10 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         }
     }
 
+    override fun dataChanged() {
+        onGetData(0)
+    }
+
     override fun getContext() : Context{
         return mContext
     }

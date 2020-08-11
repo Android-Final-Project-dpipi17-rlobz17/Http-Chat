@@ -30,4 +30,15 @@ interface MessageDao {
 
     @Query("select * from message_table")
     fun getAllMessages(): List<MessageEntity>
+
+
+    @Query ("""
+        Delete from message_table
+        where chatID in 
+            (select ch.id from chat_table ch where 
+                (ch.firstUser = :clientNickName and ch.secondUser = :friendNickName) or
+                (ch.secondUser = :clientNickName and ch.firstUser = :friendNickName))
+                
+    """)
+    fun deleteAllMessagesBetween(clientNickName: String, friendNickName: String)
 }

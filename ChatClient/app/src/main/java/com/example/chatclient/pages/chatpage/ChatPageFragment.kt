@@ -30,7 +30,7 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
 
     private lateinit var myNickName: String
     private lateinit var friendNickName: String
-    private var chatId: Int = 6
+    private var chatId: Int = 21
 
     override fun onCreateView(
         inflater: LayoutInflater,

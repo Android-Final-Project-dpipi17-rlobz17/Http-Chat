@@ -42,6 +42,10 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         return database.getMessageDao().getLastMessage(chatID)
     }
 
+    override fun deleteAllMessagesBetween(clientNickName: String, friendNickName: String) {
+        database.getMessageDao().deleteAllMessagesBetween(clientNickName, friendNickName)
+    }
+
     override fun insertChat(chat: ChatEntity): Long {
         return database.getChatDao().insertChat(chat)
     }

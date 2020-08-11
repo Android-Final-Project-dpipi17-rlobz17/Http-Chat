@@ -13,7 +13,6 @@ import com.sun.net.httpserver.HttpServer
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.net.InetSocketAddress
 import java.util.*
 import java.util.concurrent.Executors
@@ -188,11 +187,15 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
     }
 
     private fun handleHistoryRemove(exchange: HttpExchange){
-        val inputStreamReader = InputStreamReader(exchange.requestBody, "utf-8")
-        val jsonString = BufferedReader(inputStreamReader).use(BufferedReader::readText)
-        val user: UserEntity = Gson().fromJson(jsonString, UserEntity::class.java)
+        val params = queryToMap(exchange.requestURI.rawQuery)
+        val clientNickname = params?.get("clientNickName")
+        val friendNickName = params?.get("friendNickName")
 
-        // TODO[RL]
+        if(clientNickname != null && friendNickName != null){
+            model.deleteAllMessagesBetween(clientNickname, friendNickName)
+        }
+
+        sendResponse(exchange, true.toString())
     }
 
 

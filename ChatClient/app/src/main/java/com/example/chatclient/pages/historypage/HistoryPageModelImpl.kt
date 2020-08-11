@@ -26,18 +26,38 @@ class HistoryPageModelImpl (var presenter: HistoryPageContract.Presenter) : Hist
                 if (response.code() == 200) {
                     presenter.updateData(response.body()!!, searchText)
                 }else{
-                    Thread.sleep(1000)
+                    Thread.sleep(100)
                 }
             }
-
             override fun onFailure(call: Call<List<HistoryResponse>>, t: Throwable) {
-                Thread.sleep(1000)
+                Thread.sleep(100)
             }
         })
     }
 
-    override fun removeMessages(nickname: String) {
-        TODO("Not yet implemented")
+    override fun removeMessages(userNickname: String, friendNickname: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://localhost:5000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service: MessageService = retrofit.create<MessageService>(MessageService::class.java)
+        val call = service.removeHistory(userNickname, friendNickname)
+
+
+        call.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if (response.code() == 200) {
+                    presenter.dataChanged()
+                }else{
+                    Thread.sleep(100)
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Thread.sleep(100)
+            }
+        })
     }
 
 }
