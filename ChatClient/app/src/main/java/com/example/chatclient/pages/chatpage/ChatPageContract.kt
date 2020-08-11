@@ -9,7 +9,7 @@ interface ChatPageContract {
 
     interface View {
         fun setUpToolBar(collapsibleToolBarLayoutModel: CollapsibleToolBarLayoutModel)
-        fun updateRecyclerView(cells: List<MessageCellModel>)
+        fun updateRecyclerView(cells: List<MessageCellModel>, lastMessageId: Int)
     }
 
     interface Presenter {

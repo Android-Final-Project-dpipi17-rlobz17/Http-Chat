@@ -14,6 +14,7 @@ class LoginPageModelImpl (var presenter: LoginPageContract.Presenter) : LoginPag
     override fun checkLogin(nickname: String, about: String, profile_picture: String){
         val retrofit = Retrofit.Builder()
             .baseUrl("http://localhost:5000/")
+            .baseUrl("http://10.0.2.2:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

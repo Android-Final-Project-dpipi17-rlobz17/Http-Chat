@@ -64,7 +64,6 @@ class ConnectPageFragment : Fragment(), ConnectPageContract.View {
     override fun onConnectionSuccess() {
         (mContext as Activity).runOnUiThread {
             progressBar.smoothToHide()
-
             findNavController().navigate(R.id.action_connectPageFragment_to_loginPageFragment)
         }
     }

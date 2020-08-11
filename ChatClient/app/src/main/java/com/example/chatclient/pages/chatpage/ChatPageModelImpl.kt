@@ -3,18 +3,17 @@ package com.example.chatclient.pages.chatpage
 import com.example.chatclient.network.api.MessageService
 import com.example.chatclient.network.dataclasses.MessageEntity
 import com.example.chatclient.pages.chatpage.responsedataclasses.ChatPageResponse
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 class ChatPageModelImpl(var presenter: ChatPageContract.Presenter) : ChatPageContract.Model {
 
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("http://localhost:5000/")
+        .baseUrl("http://10.0.2.2:5000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

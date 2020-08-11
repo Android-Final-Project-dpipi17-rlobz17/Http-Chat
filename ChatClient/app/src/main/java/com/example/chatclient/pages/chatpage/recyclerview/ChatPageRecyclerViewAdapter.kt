@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
-import java.util.*
 
 class ChatPageRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -14,21 +13,7 @@ class ChatPageRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         const val FRIEND_MESSAGE = 2
     }
 
-    private var cells : List<MessageCellModel> = listOf(
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false, Date()),
-        MessageCellModel("bbbbbbbbbbbbbbbbbbbbbb", true, Date()),
-        MessageCellModel("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", true, Date()),
-        MessageCellModel("ggggggggggggggggggggggggggggggggggggggggggggggggggg", true, Date()),
-        MessageCellModel("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", false, Date()),
-        MessageCellModel("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", true, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true, Date()),
-        MessageCellModel("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true, Date())
-    );
+    private var cells : List<MessageCellModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val cellView: View = if (viewType == MY_MESSAGE) {

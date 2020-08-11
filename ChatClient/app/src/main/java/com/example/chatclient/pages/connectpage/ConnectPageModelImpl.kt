@@ -13,6 +13,7 @@ class ConnectPageModelImpl(var presenter: ConnectPageContract.Presenter) : Conne
     override fun checkConnection() {
         val retrofit = Retrofit.Builder()
             .baseUrl("http://localhost:5000/")
+            .baseUrl("http://10.0.2.2:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -24,8 +25,9 @@ class ConnectPageModelImpl(var presenter: ConnectPageContract.Presenter) : Conne
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if (response.code() == 200) {
                     presenter.connectionChecked(true)
+                } else {
+                    presenter.connectionChecked(false)
                 }
-                presenter.connectionChecked(false)
             }
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 presenter.connectionChecked(false)

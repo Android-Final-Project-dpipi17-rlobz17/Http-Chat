@@ -30,6 +30,7 @@ class ChatPagePresenterImpl(var view: ChatPageContract.View, var context: Contex
         )
 
         var messageCellModels: List<MessageCellModel> = ArrayList()
+        var lastMessageId = -1
         chatPageResponse.messages.forEach {
             messageCellModels += (
                 MessageCellModel(
@@ -38,7 +39,8 @@ class ChatPagePresenterImpl(var view: ChatPageContract.View, var context: Contex
                     it.sendTime
                 )
             )
+            lastMessageId = it.id
         }
-        view.updateRecyclerView(messageCellModels)
+        view.updateRecyclerView(messageCellModels, lastMessageId)
     }
 }

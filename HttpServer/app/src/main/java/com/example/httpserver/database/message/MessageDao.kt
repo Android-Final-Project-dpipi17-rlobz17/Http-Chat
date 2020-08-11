@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.httpserver.database.user.UserEntity
 
 @Dao
 interface MessageDao {

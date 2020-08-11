@@ -22,6 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.timerTask
 
 class ChatPageFragment : Fragment(), ChatPageContract.View,
     CollapsibleConstraintLayout.BackButtonClickHandler, ChatPageMessageInput.SendButtonClickHandler {
@@ -32,10 +33,12 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
     private lateinit var adapter: ChatPageRecyclerViewAdapter
     private lateinit var toolBar: CollapsibleConstraintLayout
     private lateinit var messageInput: ChatPageMessageInput
+    private lateinit var appBarLayout: AppBarLayout
 
     private lateinit var myNickName: String
     private lateinit var friendNickName: String
     private var chatId: Int = 0
+    private var lastMessageId: Int = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,15 +59,15 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
         friendNickName = arguments?.getString("friendNickName").toString()
         chatId = arguments?.getInt("chatId")!!
 
-        GlobalScope.launch {
-            presenter.fetchMessages(myNickName, friendNickName)
+        appBarLayout = view.findViewById<AppBarLayout>(R.id.chatPageAppBarLayout)
+        appBarLayout.setExpanded(false)
 
-            (mContext as Activity).runOnUiThread {
-                recyclerView.scrollToPosition(0)
+        Timer().schedule(timerTask {
+            GlobalScope.launch {
+                presenter.fetchMessages(myNickName, friendNickName)
             }
-        }
+        }, 0, 3000)
 
-        view.findViewById<AppBarLayout>(R.id.chatPageAppBarLayout).setExpanded(false)
         return view
     }
 
@@ -78,6 +81,17 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         adapter = ChatPageRecyclerViewAdapter()
         recyclerView.adapter = adapter
+
+        recyclerView.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                recyclerView.postDelayed({
+                    recyclerView.smoothScrollToPosition(
+                        adapter.itemCount
+                    )
+                    appBarLayout.setExpanded(false)
+                }, 100)
+            }
+        }
 
         messageInput = view.findViewById(R.id.chatPageMessageInput)
         messageInput.setUpView(this)
@@ -98,7 +112,7 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
 
                 (mContext as Activity).runOnUiThread {
                     adapter.addMessage(MessageCellModel(message, true, Date()))
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(adapter.itemCount)
                 }
             }
         }
@@ -109,7 +123,17 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
         toolBar.setUpView(collapsibleToolBarLayoutModel, this)
     }
 
-    override fun updateRecyclerView(cells: List<MessageCellModel>) {
-        adapter.setUpCells(ArrayList(cells))
+    override fun updateRecyclerView(cells: List<MessageCellModel>, lastMessageId: Int) {
+        if (lastMessageId != this.lastMessageId) {
+            adapter.setUpCells(ArrayList(cells))
+
+            if (this.lastMessageId == 0) {
+                recyclerView.scrollToPosition(adapter.itemCount - 1)
+            } else {
+                recyclerView.smoothScrollToPosition(adapter.itemCount)
+                appBarLayout.setExpanded(false)
+            }
+            this.lastMessageId = lastMessageId
+        }
     }
 }
