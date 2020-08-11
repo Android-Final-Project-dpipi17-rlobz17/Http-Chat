@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.chatclient.R
 import com.example.chatclient.SharedPreferencesInfo
+import com.wang.avi.AVLoadingIndicatorView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
     private lateinit var nickname_textView : EditText
     private lateinit var about_textView : EditText
     private lateinit var login_button : Button
+    private lateinit var progressBar: AVLoadingIndicatorView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,7 +61,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         nickname_textView = view.findViewById(R.id.nickname_text_view)
         about_textView = view.findViewById(R.id.about_text_view)
         login_button = view.findViewById(R.id.login_button)
-
+        progressBar = view.findViewById(R.id.login_fragment_layout_progress_bar)
 
         profile_picture_imageView.setOnClickListener {
             openGallery()
@@ -75,17 +77,10 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         val about = about_textView.text.toString()
         val profilePicture = getBase64ForPicture()
 
-        Log.d("login_page_debug", "getBase64ForPicture got photo into -> $profilePicture")
-
-        /* TODO[RL] this is method to convert base64 to Image (Use it wherever You want)
-        val imageBytes = Base64.decode(profilePicture, Base64.DEFAULT)
-        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        profile_picture_imageView.setImageBitmap(decodedImage)
-         */
-
         if(checkTextViews(nickname,about)) {
             changeComponentsState(false)
 
+            progressBar.smoothToShow()
             GlobalScope.launch {
                 presenter.checkLogin(nickname, about, profilePicture)
             }
@@ -102,10 +97,9 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         editor?.apply()
 
         (mContext as Activity).runOnUiThread {
-
+            progressBar.smoothToHide()
             nickname_textView.text.clear()
             about_textView.text.clear()
-
             findNavController().navigate(R.id.action_loginPageFragment_to_historyPageFragment)
         }
     }
@@ -116,6 +110,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
             about_textView.text.clear()
             changeComponentsState(true)
 
+            progressBar.smoothToHide()
             Toast.makeText(mContext, getString(R.string.login_failure), Toast.LENGTH_SHORT).let {
                 it.setGravity(Gravity.CENTER, 0, 0)
                 it.show()
@@ -128,12 +123,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         about_textView.isEnabled = enabled
         login_button.isEnabled = enabled
         login_button.isClickable = enabled
-
-        if(enabled){
-            login_button.text = getString(R.string.login_button_start)
-        }else{
-            login_button.text = getString(R.string.login_button_wait)
-        }
+        profile_picture_imageView.isEnabled = enabled
     }
 
     private fun checkTextViews(nickname:String, about:String) : Boolean{

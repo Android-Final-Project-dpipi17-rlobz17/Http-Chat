@@ -41,6 +41,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:textColor="#ff252d46"
             tools:text="Revaz Lobzhanidze" />
 
         <TextView
@@ -52,6 +53,7 @@
             android:maxLines="2"
             android:padding="10dp"
             android:textSize="18sp"
+            android:textColor="#ff9da3b7"
             tools:text="On my way home, but i needed to bring some things, so i stayed at home and I did not have enough time" />
     </LinearLayout>
 

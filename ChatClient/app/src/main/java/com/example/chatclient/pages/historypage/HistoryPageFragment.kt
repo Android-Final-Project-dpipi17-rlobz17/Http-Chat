@@ -104,15 +104,15 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.setUpView(this)
 
-        Timer().schedule(timerTask {
-            var searchText = searchEditText.text.toString()
-            if(searchText.length <= 2){
-                searchText = ""
-            }
-            GlobalScope.launch {
-                presenter.checkData(searchText)
-            }
-        }, 0, 3000)
+//        Timer().schedule(timerTask {
+//            var searchText = searchEditText.text.toString()
+//            if(searchText.length <= 2){
+//                searchText = ""
+//            }
+//            GlobalScope.launch {
+//                presenter.checkData(searchText)
+//            }
+//        }, 0, 3000)
 
         updateAllDataAndPositionZero()
         return view

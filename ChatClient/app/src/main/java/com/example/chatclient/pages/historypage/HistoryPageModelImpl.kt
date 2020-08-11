@@ -14,7 +14,7 @@ class HistoryPageModelImpl (var presenter: HistoryPageContract.Presenter) : Hist
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://localhost:5000/")
-//        .baseUrl("http://10.0.2.2:5000/")
+        .baseUrl("http://10.0.2.2:5000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
