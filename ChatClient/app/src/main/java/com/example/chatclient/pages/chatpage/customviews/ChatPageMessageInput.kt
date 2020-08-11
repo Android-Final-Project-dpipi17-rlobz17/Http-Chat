@@ -26,6 +26,7 @@ class ChatPageMessageInput(context: Context, attrs: AttributeSet?) : ConstraintL
 
         sendButton.setOnClickListener {
             sendButtonClickHandler.onSendButtonClickHandler(messageEditText.text.toString())
+            messageEditText.text.clear()
         }
     }
 

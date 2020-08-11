@@ -19,7 +19,8 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
 
     private var clickListener = View.OnClickListener {
         val args = Bundle()
-        args.putString("friend nickname", data[it.tag as Int].friend_nickname)
+        args.putString("friendNickName", data[it.tag as Int].friend_nickname)
+        args.putInt("chatId", data[it.tag as Int].chat_id)
         navController.navigate(R.id.action_historyPageFragment_to_chatPageFragment, args)
     }
 

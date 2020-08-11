@@ -57,9 +57,8 @@ class ChatPageRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged()
     }
 
-    fun addMessage(messageCellModel: MessageCellModel): Int {
+    fun addMessage(messageCellModel: MessageCellModel) {
         cells += (messageCellModel)
         notifyItemInserted(cells.size - 1)
-        return cells.size - 1;
     }
 }

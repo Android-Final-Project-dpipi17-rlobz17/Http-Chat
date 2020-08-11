@@ -13,7 +13,7 @@ interface MessageDao {
         select * from message_table m
         where (m.fromNickName = :firstUserName and m.toNickName = :secondUserName)
         or (m.fromNickName = :secondUserName and m.toNickName = :firstUserName)
-        order by m.sendTime desc
+        order by m.sendTime asc
         """)
     fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
 

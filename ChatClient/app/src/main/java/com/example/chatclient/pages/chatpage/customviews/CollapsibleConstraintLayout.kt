@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.chatclient.R
+import com.example.chatclient.utils.ImageUtils
 import com.google.android.material.appbar.AppBarLayout
 import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Math.abs
@@ -105,11 +106,9 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
         backButtonExpanded.setOnClickListener(backButtonClickListener)
         backButtonCollapsed.setOnClickListener(backButtonClickListener)
 
-        // TODO[DP] uncomment later
-//        val imageBytes = Base64.decode(model.imageString, Base64.DEFAULT)
-//        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-//        profilePictureExpanded.setImageBitmap(decodedImage)
-//        profilePictureCollapsed.setImageBitmap(decodedImage)
+        val decodedImage = ImageUtils.base64ToBitMap(model.imageString)
+        profilePictureExpanded.setImageBitmap(decodedImage)
+        profilePictureCollapsed.setImageBitmap(decodedImage)
 
     }
 

@@ -4,6 +4,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
+import com.example.chatclient.utils.DateUtils
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MessageCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -17,6 +20,14 @@ class MessageCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     fun setUpView(model : MessageCellModel) {
         messageText.text = model.text
-        sentTimeText.text = model.time.toString()
+        sentTimeText.text = DateUtils.formatDate(model.time)
+    }
+
+    /**
+     * Pattern: dd/MM/yyyy
+     */
+    private fun Date.formatToViewDateDefaults(): String{
+        val sdf= SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(this)
     }
 }
