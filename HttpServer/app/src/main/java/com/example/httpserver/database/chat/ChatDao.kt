@@ -1,6 +1,8 @@
 package com.example.httpserver.database.chat
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.httpserver.database.message.MessageEntity
 
@@ -33,5 +35,8 @@ interface ChatDao {
         offset :index
         """)
     fun getHistory(clientNickName : String, index : Int, searchText: String) : List<Int>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertChat(chat: ChatEntity) : Long
 
 }

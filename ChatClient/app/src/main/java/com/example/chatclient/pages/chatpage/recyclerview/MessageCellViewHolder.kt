@@ -7,13 +7,16 @@ import com.example.chatclient.R
 
 class MessageCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var messageText : TextView? = null
+    private var messageText : TextView
+    private var sentTimeText : TextView
 
     init {
         messageText = itemView.findViewById(R.id.message_cell_text)
+        sentTimeText = itemView.findViewById(R.id.message_time_tw)
     }
 
     fun setUpView(model : MessageCellModel) {
-        messageText?.text = model.text
+        messageText.text = model.text
+        sentTimeText.text = model.time.toString()
     }
 }

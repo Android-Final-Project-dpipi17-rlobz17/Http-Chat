@@ -1,6 +1,7 @@
 package com.example.httpserver
 
 import android.content.Context
+import com.example.httpserver.database.chat.ChatEntity
 import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.response.ChatPageResponse
 import com.example.httpserver.database.user.UserEntity
@@ -123,6 +124,10 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
 
         if(userFromDatabase == null){
             model.saveUser(user)
+            var otherUsers = model.getAllUsers(user.nickname)
+            otherUsers.forEach {
+                model.insertChat(ChatEntity(0, user.nickname, it.nickname))
+            }
         }else{
             if(user.profile_picture.isEmpty()){
                 user.profile_picture = userFromDatabase.profile_picture

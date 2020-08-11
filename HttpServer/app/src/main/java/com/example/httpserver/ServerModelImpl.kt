@@ -3,6 +3,7 @@ package com.example.httpserver
 import android.content.Context
 import androidx.room.Room
 import com.example.httpserver.database.MessageServiceDatabase
+import com.example.httpserver.database.chat.ChatEntity
 import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.user.UserEntity
 
@@ -12,6 +13,10 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         Room.databaseBuilder(context, MessageServiceDatabase::class.java, "notes_database")
         .fallbackToDestructiveMigration()
         .build()
+
+    override fun getAllUsers(exceptUserNickName: String): List<UserEntity> {
+        return database.getUserDao().getAllUsers(exceptUserNickName)
+    }
 
     override fun getUserByNickName(nickName: String): UserEntity? {
         return database.getUserDao().getUserByNickName(nickName)
@@ -26,8 +31,11 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
     }
 
     override fun saveMessage(message: MessageEntity) {
-        //TODO[DP] uncomment later
-        //database.getMessageDao().saveMessage(message)
+        database.getMessageDao().saveMessage(message)
+    }
+
+    override fun insertChat(chat: ChatEntity): Long {
+        return database.getChatDao().insertChat(chat)
     }
 
 
