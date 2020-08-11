@@ -13,8 +13,12 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         .fallbackToDestructiveMigration()
         .build()
 
-    override fun getUserByNickName(nickName: String): UserEntity {
+    override fun getUserByNickName(nickName: String): UserEntity? {
         return database.getUserDao().getUserByNickName(nickName)
+    }
+
+    override fun saveUser(user: UserEntity) {
+        database.getUserDao().saveUser(user)
     }
 
     override fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity> {

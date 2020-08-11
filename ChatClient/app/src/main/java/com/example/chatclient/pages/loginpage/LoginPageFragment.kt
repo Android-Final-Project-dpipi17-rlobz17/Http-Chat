@@ -3,6 +3,7 @@ package com.example.chatclient.pages.loginpage
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -20,6 +21,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.chatclient.R
+import com.example.chatclient.SharedPreferencesInfo
+import com.example.chatclient.network.dataclasses.UserEntity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -94,7 +97,12 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         }
     }
 
-    override fun onLoginSuccess() {
+    override fun onLoginSuccess(nickname: String) {
+        val sharedPreferences = context?.getSharedPreferences(SharedPreferencesInfo.MY_PREFERENCES,Context.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putString(SharedPreferencesInfo.MY_PREFERENCES_NICKNAME_KEY, nickname)
+        editor?.apply()
+
         (mContext as Activity).runOnUiThread {
             findNavController().navigate(R.id.action_loginPageFragment_to_historyPageFragment)
         }

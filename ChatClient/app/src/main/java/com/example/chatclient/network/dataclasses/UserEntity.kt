@@ -1,7 +1,7 @@
 package com.example.chatclient.network.dataclasses
 
 data class UserEntity (
-    val nickName: String,
-    val profession: String,
-    val photo: String
+    var nickname : String,
+    var about : String,
+    var profile_picture : String
 )

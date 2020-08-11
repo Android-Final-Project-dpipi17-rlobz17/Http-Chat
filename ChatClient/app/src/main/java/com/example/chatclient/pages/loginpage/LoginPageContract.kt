@@ -1,15 +1,17 @@
 package com.example.chatclient.pages.loginpage
 
+import com.example.chatclient.network.dataclasses.UserEntity
+
 interface LoginPageContract {
 
     interface View {
-        fun onLoginSuccess()
+        fun onLoginSuccess(nickname: String)
         fun onLoginFailure()
     }
 
     interface Presenter {
         fun checkLogin(nickname: String, about: String, profile_picture : String)
-        fun loginSucceeded()
+        fun loginSucceeded(nickname: String)
         fun loginFailed()
     }
 

@@ -3,14 +3,13 @@ package com.example.httpserver
 import android.content.Context
 import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.response.ChatPageResponse
+import com.example.httpserver.database.user.UserEntity
 import com.google.gson.Gson
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
-import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.InetSocketAddress
 import java.util.*
@@ -29,6 +28,8 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
 
             mHttpServer!!.createContext("/connection", connectionHandler)
             mHttpServer!!.createContext("/messages", messageHandler)
+            mHttpServer!!.createContext("/history", historyHandler)
+            mHttpServer!!.createContext("/login", loginHandler)
 
             mHttpServer!!.start()
 
@@ -103,6 +104,51 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         }
     }
 
+    private val loginHandler = HttpHandler {exchange ->
+        run {
+            when (exchange!!.requestMethod) {
+                "POST" -> {
+                    handleLogin(exchange)
+                }
+            }
+        }
+    }
+
+    private fun handleLogin(exchange: HttpExchange){
+        val inputStreamReader = InputStreamReader(exchange.requestBody, "utf-8")
+        val jsonString = BufferedReader(inputStreamReader).use(BufferedReader::readText)
+        val user: UserEntity = Gson().fromJson(jsonString, UserEntity::class.java)
+
+        val userFromDatabase = model.getUserByNickName(user.nickname)
+
+        if(userFromDatabase == null){
+            model.saveUser(user)
+        }else{
+            if(user.profile_picture.isEmpty()){
+                user.profile_picture = userFromDatabase.profile_picture
+            }
+            model.saveUser(user)
+        }
+    }
+
+    private val historyHandler = HttpHandler {exchange ->
+        run {
+            when (exchange!!.requestMethod) {
+                "GET" -> {
+                    handleHistoryData(exchange)
+                }
+                "POST" -> {
+                    handleLogin(exchange)
+                }
+            }
+        }
+    }
+
+    private fun handleHistoryData(exchange: HttpExchange){
+
+    }
+
+
     companion object {
         const val port = 5000
 
@@ -120,4 +166,6 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
             return result
         }
     }
+
+
 }

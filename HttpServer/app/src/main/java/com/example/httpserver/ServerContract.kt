@@ -18,7 +18,8 @@ interface ServerContract {
     }
 
     interface Model {
-        fun getUserByNickName(nickName: String): UserEntity
+        fun getUserByNickName(nickName: String): UserEntity?
+        fun saveUser(user : UserEntity)
         fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
         fun saveMessage(message: MessageEntity)
     }

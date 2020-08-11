@@ -23,9 +23,9 @@ class ChatPagePresenterImpl(var view: ChatPageContract.View, var context: Contex
     override fun onMessageFetch(chatPageResponse: ChatPageResponse) {
         view.setUpToolBar(
             CollapsibleToolBarLayoutModel(
-                chatPageResponse.friendUser.nickName,
-                chatPageResponse.friendUser.profession,
-                chatPageResponse.friendUser.photo
+                chatPageResponse.friendUser.nickname,
+                chatPageResponse.friendUser.about,
+                chatPageResponse.friendUser.profile_picture
             )
         )
 
@@ -34,7 +34,7 @@ class ChatPagePresenterImpl(var view: ChatPageContract.View, var context: Contex
             messageCellModels += (
                 MessageCellModel(
                     it.text,
-                    it.fromNickName != chatPageResponse.friendUser.nickName,
+                    it.fromNickName != chatPageResponse.friendUser.nickname,
                     it.sendTime
                 )
             )

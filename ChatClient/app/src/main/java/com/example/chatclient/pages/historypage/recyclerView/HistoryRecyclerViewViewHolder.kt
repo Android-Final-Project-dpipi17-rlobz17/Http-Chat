@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
-import com.example.chatclient.network.api.dataClasses.HistoryItem
+import com.example.chatclient.network.dataclasses.HistoryResponse
 
 class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -22,20 +22,20 @@ class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(i
         history_recycler_view_item_last_date_text_view = itemView.findViewById(R.id.history_recycler_view_item_last_date_text_view)
     }
 
-    fun setUpView(model: HistoryItem){
-        if(model.image_string == ""){
+    fun setUpView(model: HistoryResponse){
+        if(model.friend_image_string == ""){
             history_recycler_view_item_image_view?.setImageResource(R.drawable.login_default_avatar)
         }else {
             val imageBytes =
-                android.util.Base64.decode(model.image_string, android.util.Base64.DEFAULT)
+                android.util.Base64.decode(model.friend_image_string, android.util.Base64.DEFAULT)
             val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             history_recycler_view_item_image_view?.setImageBitmap(decodedImage)
         }
 
-        history_recycler_view_item_nickname_text_view?.text = model.nickname
-        history_recycler_view_item_last_message_text_view?.text = model.last_message
+        history_recycler_view_item_nickname_text_view?.text = model.friend_nickname
+        history_recycler_view_item_last_message_text_view?.text = model.friend_last_message
         // TODO[RL] display date better
-        history_recycler_view_item_last_date_text_view?.text = model.last_date.toString()
+        history_recycler_view_item_last_date_text_view?.text = model.friend_last_date.toString()
     }
 
 }
