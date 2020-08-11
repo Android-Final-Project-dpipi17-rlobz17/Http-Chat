@@ -102,6 +102,10 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
         editor?.apply()
 
         (mContext as Activity).runOnUiThread {
+
+            nickname_textView.text.clear()
+            about_textView.text.clear()
+
             findNavController().navigate(R.id.action_loginPageFragment_to_historyPageFragment)
         }
     }

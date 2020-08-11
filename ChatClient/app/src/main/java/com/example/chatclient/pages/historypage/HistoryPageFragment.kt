@@ -25,6 +25,7 @@ import com.example.chatclient.pages.historypage.recyclerView.HistoryRecyclerView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.concurrent.timerTask
 
 
 class HistoryPageFragment: Fragment(), HistoryPageContract.View,
@@ -103,6 +104,16 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.setUpView(this)
 
+        Timer().schedule(timerTask {
+            var searchText = searchEditText.text.toString()
+            if(searchText.length <= 2){
+                searchText = ""
+            }
+            GlobalScope.launch {
+                presenter.checkData(searchText)
+            }
+        }, 0, 3000)
+
         updateAllDataAndPositionZero()
         return view
     }
@@ -156,6 +167,22 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
 
     override fun dataNeedsUpdating() {
         updateAllDataAndPositionZero()
+    }
+
+    override fun checkIfDataNeedsUpdating(newData: List<HistoryResponse>) {
+        val oldData = recyclerViewAdapter.returnAllData()
+        if(newData.size > recyclerViewAdapter.returnAllData().size){
+            dataNeedsUpdating()
+            return
+        }
+
+        if(newData.isNotEmpty() and oldData.isNotEmpty()){
+            if((newData[0].friend_last_date != oldData[0].friend_last_date) || (newData[0].chat_id != oldData[0].chat_id)){
+                dataNeedsUpdating()
+                return
+            }
+        }
+
     }
 
 }

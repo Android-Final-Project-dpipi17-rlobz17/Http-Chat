@@ -11,6 +11,7 @@ interface HistoryPageContract {
         fun newDataForChange(newData : List<HistoryResponse>)
         fun getSavedContext() : Context
         fun dataNeedsUpdating()
+        fun checkIfDataNeedsUpdating(newData : List<HistoryResponse>)
     }
 
     interface Presenter {
@@ -18,11 +19,13 @@ interface HistoryPageContract {
         fun addNewDataLazyLoading(searchText : String, index: Int)
         fun changeData(searchText : String)
         fun removeMessages(friendNickname: String)
+        fun checkData(searchText : String)
 
         // called by model and calls view
         fun newDataForLazyLoading(newData : List<HistoryResponse>)
         fun newDataForChange(newData : List<HistoryResponse>)
         fun dataNeedsUpdating()
+        fun checkIfDataNeedsUpdating(newData : List<HistoryResponse>)
     }
 
     interface Model {
@@ -30,6 +33,7 @@ interface HistoryPageContract {
         fun addNewDataLazyLoading(userNickname: String, searchText : String, index: Int)
         fun changeData(userNickname: String, searchText : String)
         fun removeMessages(userNickname: String, friendNickname: String)
+        fun checkData(userNickname: String,searchText : String)
     }
 
 }

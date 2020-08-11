@@ -62,4 +62,18 @@ class HistoryPageModelImpl (var presenter: HistoryPageContract.Presenter) : Hist
         })
     }
 
+    override fun checkData(userNickname: String, searchText: String) {
+        val service: MessageService = retrofit.create<MessageService>(MessageService::class.java)
+        val call = service.getHistory(userNickname, 0, searchText)
+
+        call.enqueue(object : Callback<List<HistoryResponse>> {
+            override fun onResponse(call: Call<List<HistoryResponse>>, response: Response<List<HistoryResponse>>) {
+                if (response.code() == 200) {
+                    presenter.checkIfDataNeedsUpdating(response.body()!!)
+                }
+            }
+            override fun onFailure(call: Call<List<HistoryResponse>>, t: Throwable) {}
+        })
+    }
+
 }

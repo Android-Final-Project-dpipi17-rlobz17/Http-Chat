@@ -34,6 +34,7 @@ class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(i
         history_recycler_view_item_nickname_text_view?.text = model.friend_nickname
         history_recycler_view_item_last_message_text_view?.text = model.friend_last_message
 
+        history_recycler_view_item_last_date_text_view?.text = ""
         model.friend_last_date?.let {
             history_recycler_view_item_last_date_text_view?.text = DateUtils.formatDate(it)
         }

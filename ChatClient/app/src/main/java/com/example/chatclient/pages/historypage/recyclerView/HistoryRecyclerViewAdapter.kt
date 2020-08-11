@@ -39,7 +39,6 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
         historyRecyclerViewViewHolder.setUpView(data[position])
         historyRecyclerViewViewHolder.itemView.tag = historyRecyclerViewViewHolder.adapterPosition
 
-
         if(position == data.size - 1 && data.size % 10 == 0) {
             dataRequestHandler.requestNewDataLazyLoading(position)
         }

@@ -22,8 +22,14 @@ class HistoryPagePresenterImpl (var view: HistoryPageContract.View, var context:
 
     override fun removeMessages(friendNickname: String) {
         val sharedPreferences = view.getSavedContext().getSharedPreferences(SharedPreferencesInfo.MY_PREFERENCES, Context.MODE_PRIVATE)
-        var userNickname = sharedPreferences.getString(SharedPreferencesInfo.MY_PREFERENCES_NICKNAME_KEY, "")!!
+        val userNickname = sharedPreferences.getString(SharedPreferencesInfo.MY_PREFERENCES_NICKNAME_KEY, "")!!
         model.removeMessages(userNickname, friendNickname)
+    }
+
+    override fun checkData(searchText: String) {
+        val sharedPreferences = view.getSavedContext().getSharedPreferences(SharedPreferencesInfo.MY_PREFERENCES, Context.MODE_PRIVATE)
+        val userNickname = sharedPreferences.getString(SharedPreferencesInfo.MY_PREFERENCES_NICKNAME_KEY, "")!!
+        model.checkData(userNickname, searchText)
     }
 
     override fun newDataForLazyLoading(newData: List<HistoryResponse>) {
@@ -36,6 +42,10 @@ class HistoryPagePresenterImpl (var view: HistoryPageContract.View, var context:
 
     override fun dataNeedsUpdating() {
         view.dataNeedsUpdating()
+    }
+
+    override fun checkIfDataNeedsUpdating(newData : List<HistoryResponse>) {
+        view.checkIfDataNeedsUpdating(newData)
     }
 
 }
