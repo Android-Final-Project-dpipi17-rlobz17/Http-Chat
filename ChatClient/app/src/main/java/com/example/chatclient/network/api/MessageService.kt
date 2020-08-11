@@ -16,7 +16,7 @@ interface MessageService {
     fun checkConnection(): Call<Boolean>
 
     @POST("login")
-    fun checkLogin (@Body userEntity: UserEntity): Call<Void>
+    fun checkLogin (@Body userEntity: UserEntity): Call<Boolean>
 
     @GET("history")
     fun getHistory(@Query("clientNickName") clientNickName: String,

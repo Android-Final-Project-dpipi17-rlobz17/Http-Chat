@@ -23,15 +23,15 @@ class LoginPageModelImpl (var presenter: LoginPageContract.Presenter) : LoginPag
 
         Thread.sleep(1000)
 
-        call.enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        call.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if (response.code() == 200) {
                     presenter.loginSucceeded(nickname)
                 }else {
                     presenter.loginFailed()
                 }
             }
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 presenter.loginFailed()
             }
         })

@@ -38,5 +38,14 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         return database.getChatDao().insertChat(chat)
     }
 
+    override fun forDebug() {
+        var users = database.getUserDao().getAllUsers("")
+        var messages = database.getMessageDao().getAllMessages()
+        var chats = database.getChatDao().getAllChats()
+
+        var m = 2 + 2
+        var n = m + 1
+    }
+
 
 }

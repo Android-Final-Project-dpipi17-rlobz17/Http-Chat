@@ -20,6 +20,7 @@
             app:toolbarId="@+id/toolbar">
 
             <com.example.chatclient.pages.historypage.customViews.HistoryToolbarLayout
+                android:id="@+id/history_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

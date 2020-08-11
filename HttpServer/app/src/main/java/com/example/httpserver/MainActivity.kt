@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), ServerContract.View {
 
     private lateinit var onOffButton : Button
+    private lateinit var debugButton : Button
     private lateinit var serviceTextView: TextView
 
     private var serverUp = false
@@ -27,6 +30,13 @@ class MainActivity : AppCompatActivity(), ServerContract.View {
             } else{
                 presenter.stopServer()
                 false
+            }
+        }
+
+        debugButton = findViewById(R.id.debug_button)
+        debugButton.setOnClickListener {
+            GlobalScope.launch {
+                presenter.forDebug()
             }
         }
     }

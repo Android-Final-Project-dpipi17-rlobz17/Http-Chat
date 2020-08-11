@@ -16,6 +16,9 @@ interface ServerContract {
         fun startServer()
         fun stopServer()
         fun sendResponse(httpExchange: HttpExchange, responseText: String)
+
+
+        fun forDebug()
     }
 
     interface Model {
@@ -27,5 +30,7 @@ interface ServerContract {
         fun saveMessage(message: MessageEntity)
 
         fun insertChat(chat: ChatEntity) : Long
+
+        fun forDebug()
     }
 }

@@ -12,6 +12,7 @@ import com.sun.net.httpserver.HttpServer
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.net.InetSocketAddress
 import java.util.*
 import java.util.concurrent.Executors
@@ -53,6 +54,10 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         val os = httpExchange.responseBody
         os.write(responseText.toByteArray())
         os.close()
+    }
+
+    override fun forDebug() {
+        model.forDebug()
     }
 
     private val messageHandler = HttpHandler { httpExchange ->
@@ -134,6 +139,7 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
             }
             model.saveUser(user)
         }
+        sendResponse(exchange, true.toString())
     }
 
     private val historyHandler = HttpHandler {exchange ->
