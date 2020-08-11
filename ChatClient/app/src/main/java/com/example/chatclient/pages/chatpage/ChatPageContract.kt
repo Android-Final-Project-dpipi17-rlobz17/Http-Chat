@@ -14,7 +14,7 @@ interface ChatPageContract {
 
     interface Presenter {
         fun fetchMessages(myNickName: String, friendNickName: String)
-        fun sendMessage(from: String, to: String, text: String)
+        fun sendMessage(from: String, to: String, text: String, chatId: Int)
         fun onMessageFetch(chatPageResponse: ChatPageResponse)
     }
 

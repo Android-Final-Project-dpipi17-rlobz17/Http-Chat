@@ -7,6 +7,7 @@ data class MessageEntity (
     val fromNickName: String,
     val toNickName: String,
     val text: String,
-    val sendTime: Date
+    val sendTime: Date,
+    val chatID: Int
 )
 

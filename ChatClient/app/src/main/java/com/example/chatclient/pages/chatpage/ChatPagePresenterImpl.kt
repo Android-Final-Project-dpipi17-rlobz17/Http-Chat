@@ -16,8 +16,8 @@ class ChatPagePresenterImpl(var view: ChatPageContract.View, var context: Contex
         model.fetchMessages(myNickName, friendNickName)
     }
 
-    override fun sendMessage(from: String, to: String, text: String) {
-        model.sendMessage(MessageEntity(0, from, to, text, Date()))
+    override fun sendMessage(from: String, to: String, text: String, chatId: Int) {
+        model.sendMessage(MessageEntity(0, from, to, text, Date(), chatId))
     }
 
     override fun onMessageFetch(chatPageResponse: ChatPageResponse) {

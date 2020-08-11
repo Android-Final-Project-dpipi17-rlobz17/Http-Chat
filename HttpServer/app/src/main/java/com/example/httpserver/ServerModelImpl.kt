@@ -26,6 +26,10 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         database.getUserDao().saveUser(user)
     }
 
+    override fun updateUser(user: UserEntity) {
+        database.getUserDao().updateUser(user)
+    }
+
     override fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity> {
         return database.getMessageDao().getChatMessages(firstUserName, secondUserName)
     }
@@ -47,7 +51,7 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
         index: Int,
         searchText: String
     ): List<ChatEntity> {
-        return database.getChatDao().getOrderedAndLimitedChatEntities(clientNickName, index, searchText)
+        return database.getChatDao().getOrderedAndLimitedChatEntities(clientNickName, index, "%${searchText}%")
     }
 
     override fun forDebug() {

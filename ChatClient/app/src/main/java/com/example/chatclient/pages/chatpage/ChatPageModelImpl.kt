@@ -42,15 +42,15 @@ class ChatPageModelImpl(var presenter: ChatPageContract.Presenter) : ChatPageCon
         val service: MessageService = retrofit.create<MessageService>(MessageService::class.java)
         val call = service.sendMessage(message)
 
-        call.enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        call.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if (response.code() == 200) {
                     response.body()?.let {
 
                     }
                 }
             }
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
 
             }
         })

@@ -33,5 +33,5 @@ interface MessageService {
                     @Query("friendNickName") friendNickName: String): Call<ChatPageResponse>
 
     @POST("messages")
-    fun sendMessage(@Body message: MessageEntity): Call<Void>
+    fun sendMessage(@Body message: MessageEntity): Call<Boolean>
 }

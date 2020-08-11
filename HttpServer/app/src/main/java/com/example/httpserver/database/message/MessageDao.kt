@@ -25,9 +25,6 @@ interface MessageDao {
         """)
     fun getLastMessage(chatID: Int): MessageEntity?
 
-
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMessage(message: MessageEntity) : Long
 

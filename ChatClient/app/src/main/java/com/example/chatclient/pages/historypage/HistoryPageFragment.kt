@@ -8,6 +8,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -22,14 +24,16 @@ import com.example.chatclient.pages.historypage.recyclerView.HistoryRecyclerView
 import com.example.chatclient.pages.historypage.recyclerView.HistoryRecyclerViewAdapter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
 import java.util.*
 
-class HistoryPageFragment: Fragment(), HistoryPageContract.View {
+
+class HistoryPageFragment: Fragment(), HistoryPageContract.View,
+    HistoryRecyclerViewAdapter.OnGetDataHandler {
 
     lateinit var mContext : Context
     private lateinit var presenter : HistoryPagePresenterImpl
     private lateinit var toolbar : HistoryToolbarLayout
+    private lateinit var searchEditText: EditText
     private lateinit var recyclerView: HistoryRecyclerView
     private lateinit var recyclerViewAdapter: HistoryRecyclerViewAdapter
 
@@ -52,18 +56,43 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
         }
 
         toolbar = view.findViewById(R.id.history_toolbar_layout)
-        toolbar.findViewById<TextView>(R.id.history_toolbar_search_text_view).addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        searchEditText = toolbar.findViewById(R.id.history_toolbar_search_text_view)
+        searchEditText.addTextChangedListener(
+            object : TextWatcher {
+                override fun onTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s != null){
-                    if(s.length > 3){
-                        presenter.getData(s.toString(), 0)
-                    }
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                private var timer = Timer()
+                private val DELAY: Long = 100
+                override fun afterTextChanged(s: Editable) {
+                    timer.cancel()
+                    timer = Timer()
+                    timer.schedule(
+                        object : TimerTask() {
+                            override fun run() {
+                                if (s.toString().length > 2) {
+                                    presenter.getData(s.toString(), 0)
+                                }
+                            }
+                        },
+                        DELAY
+                    )
                 }
             }
-        })
+        )
 
         recyclerView = view.findViewById(R.id.history_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -72,8 +101,7 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
         ItemTouchHelper(itemTouchHelpCallBack).attachToRecyclerView(recyclerView)
         recyclerViewAdapter = HistoryRecyclerViewAdapter(presenter, findNavController())
         recyclerView.adapter = recyclerViewAdapter
-
-        // recyclerViewAdapter.updateData(data, "")
+        recyclerViewAdapter.setUpView(this)
 
         GlobalScope.launch {
             presenter.getData("", 0)
@@ -95,7 +123,7 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
             GlobalScope.launch {
                 presenter.removeMessages(data[viewHolder.adapterPosition].friend_nickname)
                 Thread.sleep(100)
-                presenter.getData(recyclerViewAdapter.searchString,0)
+                presenter.getData(searchEditText.text.toString(),0)
             }
         }
     }
@@ -103,12 +131,18 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View {
     override fun updateData(newData: List<HistoryResponse>, searchString: String) {
         data = newData.toMutableList()
         (mContext as Activity).runOnUiThread {
-            recyclerViewAdapter.updateData(data, searchString)
+            recyclerViewAdapter.updateData(data)
         }
     }
 
     override fun getContext() : Context{
         return mContext
+    }
+
+    override fun onGetData(position: Int) {
+        GlobalScope.launch {
+            presenter.getData(searchEditText.text.toString(), position)
+        }
     }
 
 }

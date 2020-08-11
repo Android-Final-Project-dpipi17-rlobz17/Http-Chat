@@ -30,6 +30,7 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
 
     private lateinit var myNickName: String
     private lateinit var friendNickName: String
+    private var chatId: Int = 6
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +76,7 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
         }
 
         GlobalScope.launch {
-            presenter.sendMessage(myNickName, friendNickName, message)
+            presenter.sendMessage(myNickName, friendNickName, message, chatId)
         }
     }
 

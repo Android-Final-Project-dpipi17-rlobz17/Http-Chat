@@ -24,7 +24,8 @@ interface ServerContract {
     interface Model {
         fun getAllUsers(exceptUserNickName: String): List<UserEntity>
         fun getUserByNickName(nickName: String): UserEntity?
-        fun saveUser(user : UserEntity)
+        fun saveUser(user: UserEntity)
+        fun updateUser(user: UserEntity)
 
         fun getChatMessages(firstUserName: String, secondUserName: String): MutableList<MessageEntity>
         fun saveMessage(message: MessageEntity)

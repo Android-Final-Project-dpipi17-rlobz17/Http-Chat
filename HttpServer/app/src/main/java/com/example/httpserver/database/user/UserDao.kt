@@ -2,6 +2,7 @@ package com.example.httpserver.database.user
 
 import androidx.room.*
 
+
 @Dao
 interface UserDao {
 
@@ -13,4 +14,7 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUser(user: UserEntity)
+
+    @Update
+    fun updateUser(user: UserEntity)
 }

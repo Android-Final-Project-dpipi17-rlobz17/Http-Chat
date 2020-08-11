@@ -86,9 +86,9 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         friendUser?.let {
             if (clientNickName != null) {
                 val messages = model.getChatMessages(clientNickName, friendNickName)
-                sendResponse(exchange, ChatPageResponse(it, messages).toString())
+                sendResponse(exchange, Gson().toJson(ChatPageResponse(it, messages)))
             } else {
-                sendResponse(exchange, ChatPageResponse(it, ArrayList()).toString())
+                sendResponse(exchange, Gson().toJson(ChatPageResponse(it, ArrayList())))
             }
         }
     }
@@ -99,6 +99,7 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         val message: MessageEntity = Gson().fromJson(jsonString, MessageEntity::class.java)
 
         model.saveMessage(message)
+        sendResponse(exchange, true.toString())
     }
 
     private val connectionHandler = HttpHandler { exchange ->
@@ -138,7 +139,7 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
             if(user.profile_picture.isEmpty()){
                 user.profile_picture = userFromDatabase.profile_picture
             }
-            model.saveUser(user)
+            model.updateUser(user)
         }
         sendResponse(exchange, true.toString())
     }
@@ -182,8 +183,7 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
 
                 resultList.add(HistoryPageResponse(chatEntity.id,friendUserEntity.profile_picture, friendUserEntity.nickname, lastMessageText, lastMessageDate))
             }
-
-            sendResponse(exchange, resultList.toString())
+            sendResponse(exchange, Gson().toJson(resultList))
         }
     }
 

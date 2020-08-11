@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, private val navController: NavController) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data : List<HistoryResponse> = listOf()
-    var searchString: String = ""
+    private lateinit var onGetDataHandler: OnGetDataHandler
 
     private var clickListener = View.OnClickListener {
         val args = Bundle()
@@ -39,16 +39,21 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
         historyRecyclerViewViewHolder.itemView.tag = historyRecyclerViewViewHolder.adapterPosition
 
         if(position % 10 == 0) {
-            GlobalScope.launch {
-                presenter.getData(searchString, position)
-            }
+            //onGetDataHandler.onGetData(position)
         }
     }
 
-    fun updateData(newData: List<HistoryResponse>, searchString: String){
-        this.searchString = searchString
+    fun setUpView(onGetDataHandler: OnGetDataHandler) {
+        this.onGetDataHandler = onGetDataHandler
+    }
+
+    fun updateData(newData: List<HistoryResponse>){
         data = newData
         notifyDataSetChanged()
+    }
+
+    interface OnGetDataHandler {
+        fun onGetData(position: Int)
     }
 
 }
