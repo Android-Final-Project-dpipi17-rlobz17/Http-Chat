@@ -154,9 +154,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == 100){
-            Log.d("login_page_debug", "activity result got RESULT_OK and requestCode 100, its data is " + data!!.data.toString())
-
-            profile_picture_imageView.setImageURI(data.data)
+            profile_picture_imageView.setImageURI(data!!.data)
             isProfilePictureChanged = if(profile_picture_imageView.drawable == null){
                 profile_picture_imageView.setImageResource(R.drawable.login_default_avatar)
                 Toast.makeText(mContext, getString(R.string.login_profile_picture_invalid), Toast.LENGTH_SHORT).show()

@@ -5,7 +5,8 @@
 
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/history_fragment_background_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -39,7 +40,7 @@
             android:id="@+id/history_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/history_recycler_view_item">
+            tools:listitem="@layout/history_recycler_view_item_layout">
 
         </com.example.chatclient.pages.historypage.recyclerView.HistoryRecyclerView>
 

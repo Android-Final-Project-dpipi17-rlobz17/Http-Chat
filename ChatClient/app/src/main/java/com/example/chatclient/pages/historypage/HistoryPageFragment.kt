@@ -1,6 +1,6 @@
 package com.example.chatclient.pages.historypage
 
-import android.app.Activity
+
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -8,15 +8,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.chatclient.R
 import com.example.chatclient.network.dataclasses.HistoryResponse
 import com.example.chatclient.pages.historypage.customViews.HistoryToolbarLayout
@@ -58,29 +54,15 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         searchEditText = toolbar.findViewById(R.id.history_toolbar_search_text_view)
         searchEditText.addTextChangedListener(
             object : TextWatcher {
-                override fun onTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                override fun onTextChanged(s: CharSequence,start: Int,before: Int,count: Int) {}
+                override fun beforeTextChanged(s: CharSequence,start: Int,count: Int,after: Int) {}
 
                 private var timer = Timer()
                 private val DELAY: Long = 100
                 override fun afterTextChanged(s: Editable) {
                     timer.cancel()
                     timer = Timer()
-                    timer.schedule(
-                        object : TimerTask() {
+                    timer.schedule(object : TimerTask() {
                             override fun run() {
                                 if (s.toString().length > 2) {
                                     updateAllDataAndPositionZero()
@@ -99,7 +81,6 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setEmptyView(view.findViewById(R.id.history_recycler_view_empty_text_view))
-//        ItemTouchHelper(itemTouchHelpCallBack).attachToRecyclerView(recyclerView)
         recyclerViewAdapter = HistoryRecyclerViewAdapter(presenter, findNavController())
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.setUpView(this)
@@ -117,22 +98,6 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         updateAllDataAndPositionZero()
         return view
     }
-
-//    private val itemTouchHelpCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-//        override fun onMove(
-//            recyclerView: RecyclerView,
-//            viewHolder: RecyclerView.ViewHolder,
-//            target: RecyclerView.ViewHolder
-//        ): Boolean {
-//            return false
-//        }
-//
-//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//            GlobalScope.launch {
-//                presenter.removeMessages(recyclerViewAdapter.returnAllData()[viewHolder.adapterPosition].friend_nickname)
-//            }
-//        }
-//    }
 
     // changes for server
     override fun requestNewDataLazyLoading(position: Int) {

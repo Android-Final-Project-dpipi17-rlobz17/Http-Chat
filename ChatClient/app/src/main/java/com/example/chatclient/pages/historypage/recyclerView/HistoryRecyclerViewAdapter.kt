@@ -32,13 +32,16 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.test_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.history_recycler_view_item_layout, parent, false)
+
         view.findViewById<FrameLayout>(R.id.history_recycler_view_item_main_layout).setOnClickListener(clickListenerForMessages)
+
         view.findViewById<Button>(R.id.history_recycler_view_item_remove_button).setOnClickListener {
             GlobalScope.launch {
                 presenter.removeMessages(data[it.tag as Int].friend_nickname)
             }
         }
+
         return HistoryRecyclerViewViewHolder(view)
     }
 
@@ -49,6 +52,7 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val historyRecyclerViewViewHolder = holder as HistoryRecyclerViewViewHolder
         historyRecyclerViewViewHolder.setUpView(data[position])
+
         historyRecyclerViewViewHolder.history_recycler_view_item_main_layout.tag = historyRecyclerViewViewHolder.adapterPosition
         historyRecyclerViewViewHolder.history_recycler_view_item_remove_button.tag = historyRecyclerViewViewHolder.adapterPosition
 
