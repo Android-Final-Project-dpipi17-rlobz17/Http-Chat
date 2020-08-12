@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chauthai.swipereveallayout.SwipeRevealLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/test_swipeRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    app:dragEdge="left"
+    app:mode="normal">
+
+    <!-- Your secondary layout here -->
+    <FrameLayout
+        android:layout_width="130dp"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/history_recycler_view_item_remove_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/history_cancel_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+    <!-- Your main layout here -->
+    <FrameLayout
+        android:id="@+id/history_recycler_view_item_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/history_recycler_view_item_image_view"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:src="@drawable/login_default_avatar"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/history_recycler_view_item_last_date_text_view"
+                app:layout_constraintStart_toEndOf="@+id/history_recycler_view_item_image_view"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/history_recycler_view_item_nickname_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="bottom"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="#ff252d46"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="Revaz Lobzhanidze" />
+
+                <TextView
+                    android:id="@+id/history_recycler_view_item_last_message_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="top"
+                    android:maxLines="2"
+                    android:padding="10dp"
+                    android:textColor="#ff9da3b7"
+                    android:textSize="18sp"
+                    tools:text="On my way home, but i needed to bring some things, so i stayed at home and I did not have enough time" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/history_recycler_view_item_last_date_text_view"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="top|center_horizontal"
+                android:lines="1"
+                android:padding="3dp"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15/04/2020" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

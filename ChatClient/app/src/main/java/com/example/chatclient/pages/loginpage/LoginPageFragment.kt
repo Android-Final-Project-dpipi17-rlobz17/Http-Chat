@@ -36,6 +36,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
     private lateinit var about_textView : EditText
     private lateinit var login_button : Button
     private lateinit var progressBar: AVLoadingIndicatorView
+    private var isProfilePictureChanged : Boolean = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -100,6 +101,7 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
             progressBar.smoothToHide()
             nickname_textView.text.clear()
             about_textView.text.clear()
+            isProfilePictureChanged = false
             findNavController().navigate(R.id.action_loginPageFragment_to_historyPageFragment)
         }
     }
@@ -132,6 +134,11 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
             return false
         }
 
+        if(nickname.length < 3){
+            Toast.makeText(mContext, getString(R.string.login_nickname_small), Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         if(about.isEmpty()){
             Toast.makeText(mContext, getString(R.string.login_about_empty), Toast.LENGTH_SHORT).show()
             return false
@@ -150,15 +157,20 @@ class LoginPageFragment : Fragment(), LoginPageContract.View {
             Log.d("login_page_debug", "activity result got RESULT_OK and requestCode 100, its data is " + data!!.data.toString())
 
             profile_picture_imageView.setImageURI(data.data)
-            if(profile_picture_imageView.drawable == null){
+            isProfilePictureChanged = if(profile_picture_imageView.drawable == null){
                 profile_picture_imageView.setImageResource(R.drawable.login_default_avatar)
                 Toast.makeText(mContext, getString(R.string.login_profile_picture_invalid), Toast.LENGTH_SHORT).show()
+                false
+            }else{
+                true
             }
         }
     }
 
     private fun getBase64ForPicture() : String{
-
+        if(!isProfilePictureChanged) {
+            return ""
+        }
         val byteArrayOutStream = ByteArrayOutputStream()
         val bitmap = (profile_picture_imageView.drawable as BitmapDrawable).bitmap
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream)

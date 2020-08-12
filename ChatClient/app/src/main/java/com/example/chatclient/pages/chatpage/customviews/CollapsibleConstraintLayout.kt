@@ -106,9 +106,14 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
         backButtonExpanded.setOnClickListener(backButtonClickListener)
         backButtonCollapsed.setOnClickListener(backButtonClickListener)
 
-        val decodedImage = ImageUtils.base64ToBitMap(model.imageString)
-        profilePictureExpanded.setImageBitmap(decodedImage)
-        profilePictureCollapsed.setImageBitmap(decodedImage)
+        if(model.imageString.isEmpty()){
+            profilePictureExpanded.setImageResource(R.drawable.login_default_avatar)
+            profilePictureCollapsed.setImageResource(R.drawable.login_default_avatar)
+        }else {
+            val decodedImage = ImageUtils.base64ToBitMap(model.imageString)
+            profilePictureExpanded.setImageBitmap(decodedImage)
+            profilePictureCollapsed.setImageBitmap(decodedImage)
+        }
 
     }
 

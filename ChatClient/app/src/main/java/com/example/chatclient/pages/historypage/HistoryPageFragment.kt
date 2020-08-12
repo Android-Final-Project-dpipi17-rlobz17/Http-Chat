@@ -99,40 +99,40 @@ class HistoryPageFragment: Fragment(), HistoryPageContract.View,
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setEmptyView(view.findViewById(R.id.history_recycler_view_empty_text_view))
-        ItemTouchHelper(itemTouchHelpCallBack).attachToRecyclerView(recyclerView)
+//        ItemTouchHelper(itemTouchHelpCallBack).attachToRecyclerView(recyclerView)
         recyclerViewAdapter = HistoryRecyclerViewAdapter(presenter, findNavController())
         recyclerView.adapter = recyclerViewAdapter
         recyclerViewAdapter.setUpView(this)
 
-//        Timer().schedule(timerTask {
-//            var searchText = searchEditText.text.toString()
-//            if(searchText.length <= 2){
-//                searchText = ""
-//            }
-//            GlobalScope.launch {
-//                presenter.checkData(searchText)
-//            }
-//        }, 0, 3000)
+        Timer().schedule(timerTask {
+            var searchText = searchEditText.text.toString()
+            if(searchText.length <= 2){
+                searchText = ""
+            }
+            GlobalScope.launch {
+                presenter.checkData(searchText)
+            }
+        }, 0, 3000)
 
         updateAllDataAndPositionZero()
         return view
     }
 
-    private val itemTouchHelpCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            return false
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            GlobalScope.launch {
-                presenter.removeMessages(recyclerViewAdapter.returnAllData()[viewHolder.adapterPosition].friend_nickname)
-            }
-        }
-    }
+//    private val itemTouchHelpCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
+//        override fun onMove(
+//            recyclerView: RecyclerView,
+//            viewHolder: RecyclerView.ViewHolder,
+//            target: RecyclerView.ViewHolder
+//        ): Boolean {
+//            return false
+//        }
+//
+//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//            GlobalScope.launch {
+//                presenter.removeMessages(recyclerViewAdapter.returnAllData()[viewHolder.adapterPosition].friend_nickname)
+//            }
+//        }
+//    }
 
     // changes for server
     override fun requestNewDataLazyLoading(position: Int) {
