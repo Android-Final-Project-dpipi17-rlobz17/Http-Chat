@@ -1,6 +1,5 @@
 package com.example.chatclient.pages.historypage.recyclerView
 
-import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
@@ -17,7 +16,7 @@ class HistoryRecyclerViewViewHolder (itemView: View) : RecyclerView.ViewHolder(i
 
     var test_swipeRevealLayout : SwipeRevealLayout = itemView.findViewById(R.id.test_swipeRevealLayout)
     var history_recycler_view_item_main_layout : FrameLayout = itemView.findViewById(R.id.history_recycler_view_item_main_layout)
-    var history_recycler_view_item_remove_button : Button = itemView.findViewById<Button>(R.id.history_recycler_view_item_remove_button)
+    var history_recycler_view_item_remove_button : Button = itemView.findViewById(R.id.history_recycler_view_item_remove_button)
 
     private var history_recycler_view_item_image_view : ImageView? = null
     private var history_recycler_view_item_nickname_text_view : TextView? = null

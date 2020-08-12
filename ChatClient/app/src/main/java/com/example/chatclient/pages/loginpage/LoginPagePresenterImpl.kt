@@ -1,7 +1,6 @@
 package com.example.chatclient.pages.loginpage
 
 import android.content.Context
-import com.example.chatclient.network.dataclasses.UserEntity
 
 class LoginPagePresenterImpl(var view: LoginPageContract.View, var context: Context) : LoginPageContract.Presenter {
 

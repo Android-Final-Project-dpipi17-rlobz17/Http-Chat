@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View

@@ -15,7 +15,7 @@ interface ChatDao {
         where ((ch.firstUser = :clientNickName and ch.secondUser like :searchText) or (ch.secondUser = :clientNickName and ch.firstUser like :searchText))
         and ((length(:searchText) > 2) or m.sendTime is not null)
         group by ch.id
-        order by CASE WHEN m.sendTime IS NULL THEN 0 ELSE 1 END Desc, max(m.sendTime) Desc
+        order by CASE WHEN m.sendTime IS NULL THEN 0 ELSE 1 END Desc, max(m.sendTime) Desc, ch.id asc
         limit 10
         offset :index
         """)

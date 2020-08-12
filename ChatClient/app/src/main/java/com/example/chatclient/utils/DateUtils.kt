@@ -13,17 +13,17 @@ class DateUtils {
 
             var differenceInTime = Date().time - date.time
 
-            var differenceInHour = (differenceInTime / (1000 * 60 * 60)) % 24;
+            var differenceInHour = (differenceInTime / (1000 * 60 * 60)) % 24
             if (differenceInHour > 0) {
                 return "${differenceInHour}h"
             }
 
-            var differenceInMinutes = (differenceInTime / (1000 * 60)) % 60;
+            var differenceInMinutes = (differenceInTime / (1000 * 60)) % 60
             if (differenceInMinutes > 0) {
                 return "${differenceInMinutes}min"
             }
 
-            var differenceInSeconds = (differenceInTime / 1000) % 60;
+            var differenceInSeconds = (differenceInTime / 1000) % 60
             return "${Math.max(0, differenceInSeconds)}s"
         }
 
@@ -49,14 +49,6 @@ class DateUtils {
 
         fun Date.addDays(days: Int): Date{
             return add(Calendar.DAY_OF_MONTH, days)
-        }
-
-        /**
-         * Pattern: yyyy-MM-dd HH:mm:ss
-         */
-        fun Date.formatToServerDateTimeDefaults(): String{
-            val sdf= SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
-            return sdf.format(this)
         }
 
     }

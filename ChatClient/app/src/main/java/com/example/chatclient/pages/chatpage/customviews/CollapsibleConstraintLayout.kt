@@ -17,7 +17,7 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleSet: Int) : super(context, attrs, defStyleSet) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleSet: Int) : super(context, attrs, defStyleSet)
 
     private var mTransitionThreshold = 0.3f
     private var mLastPosition: Int = 0
@@ -100,7 +100,7 @@ class CollapsibleConstraintLayout : ConstraintLayout, AppBarLayout.OnOffsetChang
         professionCollapsed.text = model.profession
 
 
-        var backButtonClickListener = View.OnClickListener {
+        var backButtonClickListener = OnClickListener {
             backButtonClickHandler.onClick()
         }
         backButtonExpanded.setOnClickListener(backButtonClickListener)

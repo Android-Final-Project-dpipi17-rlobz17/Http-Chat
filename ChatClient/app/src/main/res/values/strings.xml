@@ -5,7 +5,6 @@
     <string name="connection_failure">Connection failed</string>
 
     <string name="login_button_start">Start</string>
-    <string name="login_button_wait">WAIT</string>
     <string name="login_nickname_hint">Enter your nickname</string>
     <string name="login_nickname_empty">Nickname Field should NOT be empty</string>
     <string name="login_nickname_small">Nickname Field should NOT be less then 3 letters</string>

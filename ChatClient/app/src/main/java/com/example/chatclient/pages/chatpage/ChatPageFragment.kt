@@ -59,7 +59,7 @@ class ChatPageFragment : Fragment(), ChatPageContract.View,
         friendNickName = arguments?.getString("friendNickName").toString()
         chatId = arguments?.getInt("chatId")!!
 
-        appBarLayout = view.findViewById<AppBarLayout>(R.id.chatPageAppBarLayout)
+        appBarLayout = view.findViewById(R.id.chatPageAppBarLayout)
         appBarLayout.setExpanded(false)
 
         Timer().schedule(timerTask {

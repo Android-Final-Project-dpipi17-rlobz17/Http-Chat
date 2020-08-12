@@ -59,7 +59,7 @@ class HistoryRecyclerViewAdapter(val presenter : HistoryPagePresenterImpl, priva
         viewBindHelper.bind(holder.test_swipeRevealLayout, data[position].toString())
 
         if(position == data.size - 1 && data.size % 10 == 0) {
-            dataRequestHandler.requestNewDataLazyLoading(position+1)
+            dataRequestHandler.requestNewDataLazyLoading(position + 1)
         }
     }
 

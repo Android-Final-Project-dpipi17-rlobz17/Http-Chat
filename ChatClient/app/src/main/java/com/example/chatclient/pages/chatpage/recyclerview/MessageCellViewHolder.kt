@@ -22,12 +22,4 @@ class MessageCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         messageText.text = model.text
         sentTimeText.text = DateUtils.formatDate(model.time)
     }
-
-    /**
-     * Pattern: dd/MM/yyyy
-     */
-    private fun Date.formatToViewDateDefaults(): String{
-        val sdf= SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(this)
-    }
 }

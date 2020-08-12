@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.httpserver.database.chat.ChatDao
 import com.example.httpserver.database.chat.ChatEntity
-import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.message.MessageDao
+import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.user.UserDao
 import com.example.httpserver.database.user.UserEntity
 

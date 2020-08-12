@@ -1,7 +1,5 @@
 package com.example.chatclient.pages.loginpage
 
-import com.example.chatclient.network.dataclasses.UserEntity
-
 interface LoginPageContract {
 
     interface View {
