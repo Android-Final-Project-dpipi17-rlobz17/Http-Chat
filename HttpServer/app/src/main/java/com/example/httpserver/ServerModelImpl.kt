@@ -57,15 +57,4 @@ class ServerModelImpl(var presenter: ServerContract.Presenter, var context: Cont
     ): List<ChatEntity> {
         return database.getChatDao().getOrderedAndLimitedChatEntities(clientNickName, index, "%${searchText}%")
     }
-
-    override fun forDebug() {
-        var users = database.getUserDao().getAllUsers("")
-        var messages = database.getMessageDao().getAllMessages()
-        var chats = database.getChatDao().getAllChats()
-
-        var m = 2 + 2
-        var n = m + 1
-    }
-
-
 }

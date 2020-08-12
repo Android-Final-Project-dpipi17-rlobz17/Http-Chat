@@ -7,18 +7,10 @@ import com.sun.net.httpserver.HttpExchange
 
 interface ServerContract {
 
-    interface View {
-        fun onServerStart()
-        fun onServerStop()
-    }
-
     interface Presenter {
         fun startServer()
         fun stopServer()
         fun sendResponse(httpExchange: HttpExchange, responseText: String)
-
-
-        fun forDebug()
     }
 
     interface Model {
@@ -34,9 +26,5 @@ interface ServerContract {
 
         fun insertChat(chat: ChatEntity) : Long
         fun getOrderedAndLimitedChatEntities(clientNickName : String, index : Int, searchText: String) : List<ChatEntity>
-
-        fun forDebug()
-
-
     }
 }

@@ -1,6 +1,8 @@
 package com.example.httpserver
 
-import android.content.Context
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
 import com.example.httpserver.database.chat.ChatEntity
 import com.example.httpserver.database.message.MessageEntity
 import com.example.httpserver.database.response.ChatPageResponse
@@ -18,10 +20,16 @@ import java.util.*
 import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
 
-class ServerPresenterImpl(var view: ServerContract.View, var context: Context) : ServerContract.Presenter {
+class ServerPresenterImpl : ServerContract.Presenter, Service() {
 
-    private var model: ServerContract.Model = ServerModelImpl(this, context)
+    private lateinit var model: ServerContract.Model
     private var mHttpServer: HttpServer? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        model = ServerModelImpl(this, applicationContext)
+        startServer()
+    }
 
     override fun startServer() {
         try {
@@ -35,17 +43,14 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
 
             mHttpServer!!.start()
 
-            view.onServerStart()
         } catch (e: IOException) {
             e.printStackTrace()
-            view.onServerStop()
         }
     }
 
     override fun stopServer() {
         if (mHttpServer != null){
             mHttpServer!!.stop(0)
-            view.onServerStop()
         }
     }
 
@@ -54,10 +59,6 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
         val os = httpExchange.responseBody
         os.write(responseText.toByteArray())
         os.close()
-    }
-
-    override fun forDebug() {
-        model.forDebug()
     }
 
     private val messageHandler = HttpHandler { httpExchange ->
@@ -215,6 +216,10 @@ class ServerPresenterImpl(var view: ServerContract.View, var context: Context) :
             }
             return result
         }
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
 
 
