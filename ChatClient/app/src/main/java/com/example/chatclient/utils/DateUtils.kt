@@ -24,7 +24,7 @@ class DateUtils {
             }
 
             var differenceInSeconds = (differenceInTime / 1000) % 60;
-            return "${differenceInSeconds}s"
+            return "${Math.max(0, differenceInSeconds)}s"
         }
 
 

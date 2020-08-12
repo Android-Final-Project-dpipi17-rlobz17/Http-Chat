@@ -10,7 +10,7 @@ import com.example.httpserver.database.message.MessageDao
 import com.example.httpserver.database.user.UserDao
 import com.example.httpserver.database.user.UserEntity
 
-@Database(entities = [MessageEntity::class, UserEntity::class, ChatEntity::class], version = 2)
+@Database(entities = [MessageEntity::class, UserEntity::class, ChatEntity::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class MessageServiceDatabase : RoomDatabase() {
     abstract fun getMessageDao(): MessageDao
